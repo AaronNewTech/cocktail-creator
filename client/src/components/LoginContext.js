@@ -1,31 +1,38 @@
-// LoginContext.js
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-const LoginContext = createContext();
+const AuthContext = createContext();
 
-export function useLogin() {
-  return useContext(LoginContext);
-}
+function LoginContext({ children }) {
+  const [user, setUser] = useState(null);
 
-export function LoginProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    // Check local storage for user authentication status on component mount
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (isLoggedIn) {
+      setUser(true);
+    }
+  }, []);
 
   const login = () => {
-    // Implement your login logic here
-    // Update the isLoggedIn state and set cookies if needed
-    setIsLoggedIn(true);
+    setUser(true);
+    localStorage.setItem("isLoggedIn", "true");
   };
 
   const logout = () => {
-    // Implement your logout logic here
-    // Update the isLoggedIn state and clear cookies if needed
-    setIsLoggedIn(false);
+    setUser(false);
+    localStorage.removeItem("isLoggedIn");
   };
 
   return (
-    <LoginContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
-    </LoginContext.Provider>
+    </AuthContext.Provider>
   );
 }
-export default LoginContext
+
+function useAuth() {
+  return useContext(AuthContext);
+}
+
+export default LoginContext;
+export { useAuth };

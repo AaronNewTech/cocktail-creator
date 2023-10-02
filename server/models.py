@@ -147,8 +147,9 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     # display_name = db.Column(db.String)
-    username = db.Column(db.String)
+    email = db.Column(db.String)
     password = db.Column(db.String)
+    hash = db.Column(db.Text, nullable=False)
     age = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -171,11 +172,11 @@ class User(db.Model, SerializerMixin):
     #         raise ValueError('Invalid display_name provided')
     #     return display_name
 
-    # @validates('username')
-    # def validate_username(self, key, username):
-    #     if not username or username.length() <= 0:
-    #         raise ValueError('Invalid username provided')
-    #     return username
+    # @validates('email')
+    # def validate_email(self, key, email):
+    #     if not email or email.length() <= 0:
+    #         raise ValueError('Invalid email provided')
+    #     return email
 
     # @validates('password')
     # def validate_password(self, key, password):

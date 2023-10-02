@@ -10,29 +10,61 @@
 }
 
 .navbarStyles {
-  display: flex; /* Use flexbox to make the links stretch horizontally */
-  justify-content: space-between; /* Distribute the links evenly */
-  background-color: #dbb37f;
-  padding: 10px; /* Add some padding to the navbar */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  background-color: black;
+  padding: 1%;
+  padding-right: 2%;
 }
 
 .navbarStyles a {
-  color: black;
+  color: white;
   text-decoration: none;
   font-weight: bold;
   font-size: 20px;
-  /* background-color: rgba(255, 255, 255, 0.6); */
-  /* padding-left: 20px; */
+  padding-left: 20px;
 }
 
 .navbarStyles a:hover {
-  color: black;
   font-weight: bold;
 }
 
 .navbarStyles a:visited {
-  color: black;
   font-weight: bold;
+}
+
+.navbar-links {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  width: 120%;
+  /* height: 5%; */
+  align-items: center;
+  z-index: 10;
+}
+
+.dropdown {
+  position: relative;
+  float: right;
+  /* z-index: 100; */
+}
+
+.dropdown .dropdown-content {
+  padding-left: 20px;
+  margin-right: -10px;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #dbb37f;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
 body {
@@ -41,13 +73,13 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  font-family: "courier new", monospace;
+  font-family: "arial", monospace;
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("https://www.travelandleisure.com/thmb/daFAjn1P8k4Z33HO_yVh8LQPEVk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/lead-lalou-bar-NYWINE1019-055f40b36a1a467f832651cb7feaad97.jpg");
+  background-color: black;
   background-size: cover;
   background-position: center top;
 }
@@ -82,3 +114,233 @@ body {
     margin: 5px; /* Reduce margin for smaller screens */
   }
 }
+
+.new-drink-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 20%;
+  margin: 0 auto;
+  padding: 3%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 8px;
+  opacity: 0.8;
+}
+
+.new-drink-form input,
+.new-drink-form textarea,
+.new-drink-form p {
+  margin-bottom: 5%;
+}
+
+/* Optional: Style the submit button */
+.new-drink-form input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.search-box {
+  margin-top: 5%;
+  text-align: center;
+  color: white;
+}
+
+#search-text {
+  color: white;
+}
+
+.social-icons {
+  /* display: inline-flex; */
+  /* justify-content: space-between; */
+  transform: translateX(40%) translateY(0%);
+  width: 25%;
+  /* height: 10%; */
+  align-items: center;
+  /* float: right; */
+  margin-top: 0.5%;
+  margin-right: 5%;
+}
+
+#facebook {
+  width: 8%;
+}
+
+#twitter {
+  width: 13%;
+}
+
+#instagram {
+  width: 11%;
+}
+
+#navbar-logo-container {
+  width: 40%;
+}
+
+#navbar-logo {
+  width: 70%;
+}
+
+.home-page-1-container {
+  max-width: 100%;
+  height: auto;
+  max-height: 60%;
+}
+
+#home-page-1 {
+  position: relative;
+  max-width: 120%; 
+  max-height: 60%; 
+  margin-left: 5%;
+  margin-right: 15%;
+}
+
+#mixing-button-image {
+  width: 15%;
+  position: absolute;
+  max-width: 60%;
+  bottom: 5%;
+  transform: translateX(35%) translateY(-180%);
+}
+
+#bartender-image {
+  position: relative;
+  max-width: 95%;
+  margin-left: 5%;
+  margin-right: 15%;
+}
+
+.row-1 {
+  display: flex;
+}
+
+#speech-trainer-main-logo {
+  transform: translateX(-8%);
+  padding-top: 15%;
+  width: 120%;
+}
+
+#home-kids-image-1 {
+  transform: translateX(-25%) translateY(2%);
+  width: 190%;
+}
+
+#home-level-up-image {
+  width: 100%;
+  max-width: 150%;
+}
+
+#home-page-2 {
+  padding-left: 5%;
+  padding-right: 2%;
+  padding-top: 5%;
+  background-color: white;
+}
+
+.row-4 {
+  width: 100%;
+  position: relative;
+}
+
+#home-learning-center-image {
+  width: 100%;
+  position: absolute;
+  background-color: white;
+  max-width: 100%;
+  /* max-height: 100%; */
+}
+
+#video-speech-trainer-logo {
+  max-width: 100%;
+}
+
+#first-words-logo {
+  max-width: 100%;
+  transform: translateY(1%);
+}
+
+#games-logo {
+  max-width: 100%;
+  transform: translateX(0%) translateY(3%);
+}
+
+.row-3 {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 -10px;
+}
+
+#make-my-cocktail-image {
+  max-width: 20%;
+  display: block;
+  margin: 0 auto;
+}
+
+#home-page-3 {
+  margin-bottom: -30%;
+}
+
+#footer-main-image {
+  position: relative;
+  max-width: 100%;
+  width: 100%;
+  /* margin-left: 5%; */
+  /* margin-right: 15%; */
+}
+
+
+#footer-cocktail-image {
+  max-width: 100%;
+  width: 25%;
+  display: block;
+  margin: 0 auto;
+  transform: translateX(0%) translateY(-440%);
+  position: relative;
+}
+
+.footer-social-icons {
+  display: inline-flex;
+  /* justify-content: space-between; */
+  transform: translateX(280%) translateY(-100%);
+  width: 25%;
+  height: 10%;
+  align-items: center;
+  float: left;
+  margin-top: 0.5%;
+  margin-right: -125%;
+  position: relative;
+  overflow: hidden;
+  margin-trim: inline;
+  z-index: 100;
+}
+
+#facebook-footer {
+  width: 33%;
+  float: right;
+  transform: translateX(450%);
+}
+
+#twitter-footer {
+  width: 33%;
+  float: right;
+  transform: translateX(0%);
+}
+
+#instagram-footer {
+  width: 33%;
+  float: right;
+  transform: translateX(180%);
+}
+
+/* #navbar-logo-container {
+  width: 40%;
+}
+
+#navbar-logo {
+  width: 70%;
+} */

@@ -1,116 +1,105 @@
-import React, { useEffect, useState } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { useLogin } from "./LoginContext";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "./LoginContext"; // Import the useAuth hook
 
-export const LoginForm = () => {
-  const { isLoggedIn, login, logout } = useLogin(); // Use the hook to get login state and functions
+function LoginForm({ email, setEmail }) {
+  const { user, login, logout } = useAuth();
 
-  const [users, setUsers] = useState([{}]);
-  const [refreshPage, setRefreshPage] = useState(false);
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    console.log("FETCH!");
-    fetch("/users")
-      .then((res) => res.json())
-      .then((data) => {
-        setUsers(data);
-        console.log(data);
-      });
-  }, [refreshPage]);
+    // Check if the user is logged in on component mount
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (isLoggedIn) {
+      login(true); // Update the user state using the login function from useAuth
+    }
+  }, [login]);
 
-  const formSchema = yup.object().shape({
-    username: yup.string().required("Must enter a username").max(15),
-    password: yup.string().required("Must enter a password").min(6), // You can adjust the minimum length
-    age: yup
-      .number()
-      .positive()
-      .integer()
-      .required("Must enter age")
-      .typeError("Please enter an Integer")
-      .max(125),
-  });
-
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-      age: "",
-    },
-    validationSchema: formSchema,
-    onSubmit: (values) => {
-      // Perform login here
-      // You can call a login function or set a login state here based on your authentication logic
-      login();
-
-      // You can also submit the form data to the server if needed
-      fetch("users", {
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values, null, 2),
-      }).then((res) => {
-        if (res.status === 200) {
-          setRefreshPage(!refreshPage);
-        }
+        body: JSON.stringify({ email, password }),
       });
-    },
-  });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          // Login successful, update your app's state to indicate the user is logged in
+          login(); // Update the user state using the login function from useAuth
+          localStorage.setItem("isLoggedIn", "true"); // Store login status
+          setEmail(""); // Clear email field
+          setPassword(""); // Clear password field
+          setError(""); // Clear error
+
+          // console.log("user logged in");
+        } else {
+          // Login failed, display an error message
+          setError("Invalid email or password.");
+        }
+      } else {
+        // Request failed for some reason, display a general error message
+        setError("Login failed. Please try again later.");
+      }
+    } catch (error) {
+      // Handle any unexpected errors here
+      console.error("Error:", error);
+    }
+  };
+
+  const handleLogout = () => {
+    // Logout the user by removing their login status from localStorage
+    localStorage.removeItem("isLoggedIn");
+    localStorage.clear();
+    logout(); // Update the user state using the logout function from useAuth
+  };
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit} style={{ margin: "30px" }} className="form">
-        <label htmlFor="username">Username</label>
-        <br />
-        <input
-          id="username"
-          name="username"
-          onChange={formik.handleChange}
-          value={formik.values.username}
-        />
-        <p style={{ color: "red" }}>{formik.errors.username}</p>
-        <label htmlFor="password">Password</label>
-        <br />
-
-        <input
-          type="password"
-          id="password"
-          name="password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-        />
-        <p style={{ color: "red" }}>{formik.errors.password}</p>
-
-        <label htmlFor="age">Age</label>
-        <br />
-
-        <input
-          id="age"
-          name="age"
-          onChange={formik.handleChange}
-          value={formik.values.age}
-        />
-        <p style={{ color: "red" }}>{formik.errors.age}</p>
-        <button type="submit">Submit</button>
-      </form>
-      <table style={{ padding: "15px" }}>
-        <tbody>
-          {users === "undefined" ? (
-            <p>Loading</p>
-          ) : (
-            users.map((user, i) => (
-              <tr key={i}>
-                <td>{user.username}</td>
-                <td>{user.password}</td>
-                <td>{user.age}</td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+    <div id="login-container">
+      {user ? (
+        <>
+          <p id="logged-in-message" >Welcome back, {email}! You are now logged in.</p>
+          <button id="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+        </>
+      ) : (
+        <form className="login-form">
+          <div>
+            <label htmlFor="email">Email: </label>
+            <input
+              type="text"
+              id="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </div>
+          <button id="button" type="button" onClick={handleLogin}>
+            Submit
+          </button>
+        </form>
+      )}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div id="create-account-container">
+        <p id="create-account-text">Not Registered?</p>
+        <a id="create-account-link" href="http://localhost:3000/create-account">
+          Create an account
+        </a>
+      </div>
     </div>
   );
-};
+}
 
 export default LoginForm;

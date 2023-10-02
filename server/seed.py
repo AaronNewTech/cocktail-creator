@@ -26,6 +26,7 @@ from random import choice as rc, randrange
 
 with app.app_context():   
     # Drink.query.delete()
+    User.query.delete()
     
 
     if __name__ == '__main__':

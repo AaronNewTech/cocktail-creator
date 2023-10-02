@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 
-from flask import request, Flask, make_response, jsonify, session
+from flask import request, Flask, make_response, jsonify, session, redirect, url_for
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
 from models import db, Drink, Ingredient, User, DrinkIngredientsAssociation, UserDrinksAssociation
-import os
+import os, bcrypt
 from config import app, db, api
 
 
@@ -92,46 +92,91 @@ class Drinks(Resource):
 api.add_resource(Drinks, '/drinks')
 
 
-class Users(Resource):
-    def get(self):
-        users = [user.to_dict() for user in User.query.all()]
-        return make_response(users, 200)
+# class Users(Resource):
+#     def get(self):
+#         users = [user.to_dict() for user in User.query.all()]
+#         return make_response(users, 200)
     
-api.add_resource(Users, '/users')
+# api.add_resource(Users, '/users')
 
 
-class CreateUser(Resource):
+class Register(Resource):
     def post(self):
-        user = User()
-        data = request.get_json()
-
         try:
-            for attr in data:
-                setattr(user, attr, data[attr])
+            email = request.json.get('email', None)
+            password = request.json.get('password', None)
+
+            if not email:
+                return 'Missing email', 400
+
+            if not password:
+                return 'Missing password', 400
+
+            hashed = bcrypt.hashpw(password.encode(
+                'utf-8'), bcrypt.gensalt(rounds=12))
+            user = User(email=email, hash=hashed, password=password)
+
             db.session.add(user)
             db.session.commit()
-
-            # Set session variable after successful registration
-            session["user_id"] = user.id
-
-            return make_response(user.to_dict(), 201)
-        except ValueError:
-            return make_response({ "errors": ["validation errors"] }, 400)
-   
-api.add_resource(CreateUser, '/create_user')
+            return f'Welcome {email}', 201
+        except Exception as e:
+            # Log the error for debugging
+            print(f"Error: {str(e)}")
+            return 'Internal Server Error', 500
 
 
-class UserSettings(Resource):
+api.add_resource(Register, '/create_account')
 
-    def delete(self, id):
-        user = Drink.query.filter(User.id==id).one_or_none()
-        if user is None:
-            return make_response({'error': 'Drink is not found'}, 404)
-        db.session.delete(user)
-        db.session.commit()
-        return make_response({''}, 204)
+class Login(Resource):
+    def post(self):
+        email = request.json.get('email', None)
+        password = request.json.get('password', None)
+        if not email:
+            return make_response(jsonify(success=False, message='Missing Email!'), 400)
+        if not password:
+            return make_response(jsonify(success=False, message='Missing Password!'), 400)
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return make_response(jsonify(success=False, message='User Not Found!'), 404)
+        if bcrypt.checkpw(password.encode('utf-8'), user.hash):
+            # Store user.id in the session
+            session['logged_in_user_id'] = user.id
 
-api.add_resource(UserSettings, '/user_settings')
+            return make_response(jsonify(success=True, message=f'Welcome back {email}'), 201)
+        else:
+            return make_response(jsonify(success=False, message='Wrong Password!'), 200)
+
+
+api.add_resource(Login, '/login')
+
+
+class Logout(Resource):
+    def post(self):
+        if 'logged_in_user_id' in session:
+            logged_in_user_id = session['logged_in_user_id']
+            # Use user_id to query the user's data from the database
+            logged_in_user_id = session.get(User, logged_in_user_id)
+            # print(logged_in_user_id)
+            # Remove user_id from the session
+            session.pop('logged_in_user_id', None)
+        # Redirect to the login page or another page after logout
+        return redirect(url_for('login'))
+
+
+api.add_resource(Logout, '/logout')
+
+
+# class UserSettings(Resource):
+
+#     def delete(self, id):
+#         user = Drink.query.filter(User.id==id).one_or_none()
+#         if user is None:
+#             return make_response({'error': 'Drink is not found'}, 404)
+#         db.session.delete(user)
+#         db.session.commit()
+#         return make_response({''}, 204)
+
+# api.add_resource(UserSettings, '/user_settings')
 
 
 class CreateDrink(Resource):
@@ -195,33 +240,33 @@ api.add_resource(CreateDrink, '/create_drink')
     
 # api.add_resource(UserDrinks, '/add_tofavorites')
 
-@app.route('/login', methods=['POST'])
-def login():
-    data = request.get_json()
-    username = data.get("username")
-    password = data.get("password")
+# @app.route('/login', methods=['POST'])
+# def login():
+#     data = request.get_json()
+#     username = data.get("username")
+#     password = data.get("password")
 
-    # Implement your user authentication logic here
-    user = User.query.filter_by(username=username).first()
-    if user and user.password == password:
-        session["user_id"] = user.id
-        return make_response({"message": "Login successful"}, 200)
-    else:
-        return make_response({"message": "Invalid credentials"}, 401)
+#     # Implement your user authentication logic here
+#     user = User.query.filter_by(username=username).first()
+#     if user and user.password == password:
+#         session["user_id"] = user.id
+#         return make_response({"message": "Login successful"}, 200)
+#     else:
+#         return make_response({"message": "Invalid credentials"}, 401)
 
 
-@app.route('/logout', methods=['POST'])
-def logout():
-    session.clear()
-    return make_response({"message": "Logout successful"}, 200)
+# @app.route('/logout', methods=['POST'])
+# def logout():
+#     session.clear()
+#     return make_response({"message": "Logout successful"}, 200)
 
-@app.route('/check_login', methods=['GET'])
-def check_login():
-    user_id = session.get("user_id")
-    if user_id:
-        return make_response({"logged_in": True, "user_id": user_id}, 200)
-    else:
-        return make_response({"logged_in": False}, 200)
+# @app.route('/check_login', methods=['GET'])
+# def check_login():
+#     user_id = session.get("user_id")
+#     if user_id:
+#         return make_response({"logged_in": True, "user_id": user_id}, 200)
+#     else:
+#         return make_response({"logged_in": False}, 200)
 
 @app.route('/users-with-drinks')
 def users_with_drinks():
@@ -234,7 +279,7 @@ def users_with_drinks():
     for user in users:
         user_data = {
             'id': user.id,
-            'username': user.username,
+            'email': user.email,
             'age': user.age,
             'favoriteDrinks': []  # This will store the user's favorite drinks
         }

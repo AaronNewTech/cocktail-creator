@@ -56,7 +56,7 @@ function CreateDrink() {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="form">
+    <form onSubmit={formik.handleSubmit} className="new-drink-form">
       <input
         id="drinkName"
         name="drinkName"
@@ -76,14 +76,7 @@ function CreateDrink() {
           placeholder={`Ingredient ${index + 1}`}
         />
       ))}
-      <textarea
-        id="instructions"
-        name="instructions"
-        onChange={formik.handleChange}
-        value={formik.values.instructions}
-        placeholder="Instructions"
-        rows={5}
-      />
+
       {/* Add input for the image URL */}
       <input
         id="imageURL"
@@ -92,6 +85,14 @@ function CreateDrink() {
         onChange={formik.handleChange}
         value={formik.values.imageURL}
         placeholder="Image URL"
+      />
+      <textarea
+        id="instructions"
+        name="instructions"
+        onChange={formik.handleChange}
+        value={formik.values.instructions}
+        placeholder="Instructions"
+        rows={5}
       />
       {formErrors.length > 0
         ? formErrors.map((err, index) => (
