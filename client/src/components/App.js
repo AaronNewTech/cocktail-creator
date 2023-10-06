@@ -1,51 +1,48 @@
 // npm start --prefix client
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./NavBar";
 import Home from "./Home";
 import RandomDrink from "./RandomDrink";
 import CreateAccount from "./CreateAccount";
-import DrinkDisplay from "./DrinkDisplay";
 import LoginForm from "./LoginForm";
 import CreateDrink from "./CreateDrink";
-import { LoginContext } from './LoginContext';
-import AllDrinks from "./DrinksByName";
-import AllUsers from "./AllUsers";
+import AllDrinks from "./AllDrinks";
+import UserFavorites from "./UserFavorites";
 import DrinkSearch from "./DrinkSearch";
 import Footer from "./Footer";
+import CocktailGenerator from "./CocktailGenerator";
+import MocktailSearch from "./MocktailSearch";
 
 function App() {
   const [email, setEmail] = useState("");
 
-  // const [randomCard, setRandomCard] = useState(null);
-
-  // useEffect(() => {
-  //   fetchRandomCard();
-  // }, []);
-
-  // const fetchRandomCard = () => {
-  //   fetch("http://localhost:3000/drinks/1") // Fetch a single card by its ID (you might need to adjust the URL)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setRandomCard(data);
-  //     });
-  // };
+  window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+  };
 
   return (
     <div>
       <NavBar />
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route path="/login" element={<LoginForm email={email} setEmail={setEmail} />} />
-        <Route path="/users-with-drinks" element={<AllUsers  />} />
+        <Route
+          path="/login"
+          element={<LoginForm email={email} setEmail={setEmail} />}
+        />
+        <Route path="/user-favorites" element={<UserFavorites />} />
         <Route path="/random-drink" element={<RandomDrink />} />
-        <Route path="/create-drink" element={<CreateDrink />} />
+        <Route
+          path="/create-drink"
+          element={<CreateDrink email={email} setEmail={setEmail} />}
+        />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/drinks" element={<AllDrinks />} />
         <Route path="/drink-search" element={<DrinkSearch />} />
+        <Route path="/cocktail-generator" element={<CocktailGenerator />} />
+        <Route path="/mocktail-search" element={<MocktailSearch />} />
       </Routes>
       <Footer />
-      
     </div>
   );
 }

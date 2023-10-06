@@ -1,7 +1,7 @@
 :root {
   --bg: #282c34;
   --header: #fff;
-  --link: #61dafb;
+  /* --link: #61dafb; */
   --text: hsla(0, 0%, 100%, 0.88);
 }
 
@@ -92,14 +92,19 @@ body {
   align-items: center;
   border: 2px solid var(--link);
   padding: 20px;
-  width: 70%; /* Set initial width */
+  width: 60%; /* Set initial width */
   margin: 0 auto; /* Center align the container horizontally */
+  color: black;
 }
 
 .flex-container > * {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 10px;
   margin: 10px;
+}
+
+#instructions {
+  overflow: hidden;
 }
 
 /* Media query for smaller screens */
@@ -122,8 +127,8 @@ body {
   max-width: 20%;
   margin: 0 auto;
   padding: 3%;
-  border: 1px solid #ddd;
-  background-color: #fff;
+  border: 1px solid white;
+  background-color: white;
   border-radius: 8px;
   opacity: 0.8;
 }
@@ -137,13 +142,13 @@ body {
 /* Optional: Style the submit button */
 .new-drink-form input[type="submit"] {
   background-color: #007bff;
-  color: #fff;
+  color: white;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
 }
 
-.search-box {
+#search-box {
   margin-top: 5%;
   text-align: center;
   color: white;
@@ -151,6 +156,10 @@ body {
 
 #search-text {
   color: white;
+}
+
+#drink-search-padding {
+  padding-top: 80%;
 }
 
 .social-icons {
@@ -193,8 +202,8 @@ body {
 
 #home-page-1 {
   position: relative;
-  max-width: 120%; 
-  max-height: 60%; 
+  max-width: 120%;
+  max-height: 60%;
   margin-left: 5%;
   margin-right: 15%;
 }
@@ -205,6 +214,7 @@ body {
   max-width: 60%;
   bottom: 5%;
   transform: translateX(35%) translateY(-180%);
+  z-index: 20;
 }
 
 #bartender-image {
@@ -238,12 +248,8 @@ body {
   padding-left: 5%;
   padding-right: 2%;
   padding-top: 5%;
+  padding-bottom: 2%;
   background-color: white;
-}
-
-.row-4 {
-  width: 100%;
-  position: relative;
 }
 
 #home-learning-center-image {
@@ -252,6 +258,13 @@ body {
   background-color: white;
   max-width: 100%;
   /* max-height: 100%; */
+}
+
+.row-3 {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 -10px;
 }
 
 #video-speech-trainer-logo {
@@ -264,25 +277,36 @@ body {
 }
 
 #games-logo {
-  max-width: 100%;
-  transform: translateX(0%) translateY(3%);
+  max-width: 95%;
+  transform: translateX(0%) translateY(7%);
 }
 
-.row-3 {
-  max-width: 100%;
+.row-4 {
+  width: 100%;
+  position: relative;
   display: flex;
   justify-content: space-between;
-  margin: 0 -10px;
 }
 
-#make-my-cocktail-image {
-  max-width: 20%;
-  display: block;
-  margin: 0 auto;
+#cocktail-generator-image {
+  max-width: 80%;
+  /* display: block; */
+  /* margin: 0 auto; */
+  transform: translateX(20%) translateY(0%);
 }
 
-#home-page-3 {
-  margin-bottom: -30%;
+#cocktail-search-image {
+  max-width: 80%;
+  /* display: block; */
+  /* margin: 0 auto; */
+  transform: translateX(12%) translateY(0%);
+}
+
+#mocktail-search-image {
+  max-width: 80%;
+  /* display: block; */
+  /* margin: 0 auto; */
+  transform: translateX(-10%) translateY(0%);
 }
 
 #footer-main-image {
@@ -292,7 +316,6 @@ body {
   /* margin-left: 5%; */
   /* margin-right: 15%; */
 }
-
 
 #footer-cocktail-image {
   max-width: 100%;
@@ -306,7 +329,7 @@ body {
 .footer-social-icons {
   display: inline-flex;
   /* justify-content: space-between; */
-  transform: translateX(280%) translateY(-100%);
+  transform: translateX(280%) translateY(-180%);
   width: 25%;
   height: 10%;
   align-items: center;
@@ -337,6 +360,26 @@ body {
   transform: translateX(180%);
 }
 
+#footer-ready-image {
+  width: 30%;
+  transform: translateX(10%) translateY(-150%);
+}
+
+#footer-start-mixing-image {
+  width: 20%;
+  transform: translateX(-140%) translateY(-250%);
+}
+
+#footer-email-list-image {
+  width: 30%;
+  transform: translateX(-50%) translateY(-320%);
+}
+
+#footer-get-social-image {
+  width: 10%;
+  transform: translateX(-100%) translateY(-1050%);
+}
+
 /* #navbar-logo-container {
   width: 40%;
 }
@@ -344,3 +387,56 @@ body {
 #navbar-logo {
   width: 70%;
 } */
+
+#create-cocktail-logo {
+  width: 50%;
+  height: 20%;
+  /* position: sticky; */
+  margin-top: 0%;
+  transform: translateX(48%);
+}
+
+#spirits-logo-container {
+  text-align: center;
+}
+
+#spirits-logo {
+  width: 70%;
+  /* height: 20%; */
+  /* position: sticky; */
+  margin-top: -30%;
+  /* transform: translateX(20%); */
+}
+
+.spirit-buttons {
+  margin-top: -15%;
+  display: flex;
+  flex-wrap: wrap; /* Allow images to wrap to the next line */
+  justify-content: flex-start; /* Align images to the start of each line */
+}
+
+.spirit-item {
+  width: 25%; /* Each item takes up 25% of the container width to create two rows with 4 items each */
+  max-width: 25%; /* Ensure images don't exceed their container */
+
+  text-align: center;
+}
+
+#spirit-buttons {
+  width: 100%; /* Adjust this as needed based on your layout */
+  max-width: 100%; /* Ensure images don't exceed their container */
+  height: auto; /* Maintain the aspect ratio of the images */
+}
+
+#liqueur-logo {
+  width: 60%;
+  /* height: 20%; */
+  /* position: sticky; */
+  margin-top: -10%;
+  transform: translateX(30%);
+}
+
+#no-drinks-message {
+  color: white;
+  text-align: center;
+}

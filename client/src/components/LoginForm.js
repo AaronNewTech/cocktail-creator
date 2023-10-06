@@ -92,12 +92,15 @@ function LoginForm({ email, setEmail }) {
         </form>
       )}
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <div id="create-account-container">
+      {user ? ( <></>
+
+      ) : (<div id="create-account-container">
         <p id="create-account-text">Not Registered?</p>
         <a id="create-account-link" href="http://localhost:3000/create-account">
           Create an account
         </a>
-      </div>
+      </div> )}
+      
     </div>
   );
 }

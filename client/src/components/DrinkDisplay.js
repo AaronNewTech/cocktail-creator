@@ -1,7 +1,7 @@
 import React from "react";
-// import FavoriteButton from "./FavoriteButton";
+import FavoriteButton from "./FavoriteButton";
 
-function DrinkDisplay({ drink, onFavoriteClick }) {
+function DrinkDisplay({ drink, email }) {
   if (!drink) {
     return null;
   }
@@ -15,7 +15,7 @@ function DrinkDisplay({ drink, onFavoriteClick }) {
           <h2>{drink.strDrink}</h2>
 
           <img src={drink.strDrinkThumb} alt={drink.strDrink} />
-          <h3>Instructions: </h3>
+          <h3 id="instructions">Instructions: </h3>
           <p>{drink.strInstructions}</p>
 
           <h3>Ingredients:</h3>
@@ -24,18 +24,8 @@ function DrinkDisplay({ drink, onFavoriteClick }) {
               <li key={association.id}>{association.ingredient.name}</li>
             ))}
           </ul>
-          <button onClick={() => onFavoriteClick(drink.id)}>
-            Add to Favorites
-          </button>
-          {/* {drink.strVideo && (
-            <iframe
-              title={drink.strDrink}
-              width="560"
-              height="315"
-              src={`https://www.youtube.com/embed/${getVideoIdFromUrl(drink.strVideo)}`}
-              allowFullScreen
-            ></iframe>
-          )} */}
+
+          <FavoriteButton drinkId={drink.id} email={email} />
         </div>
       </div>
     </div>

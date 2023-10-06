@@ -65,7 +65,7 @@ function CreateAccount({ loggedIn, setLoggedIn }) {
           <p style={{ color: "red" }}>{formErrors.join(", ")}</p>
         )}
         <button id="button" type="submit">
-          Add User
+          Create Account
         </button>
       </form>
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}

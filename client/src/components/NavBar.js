@@ -26,7 +26,7 @@ function NavBar() {
           )}
 
           {user ? (
-            <NavLink to="/users-with-drinks"> My Favorites </NavLink>
+            <NavLink to="/user-favorites"> My Favorites </NavLink>
           ) : (
             <></>
           )}
@@ -38,7 +38,7 @@ function NavBar() {
           )}
           <NavLink to="/drink-search"> Search for Drink </NavLink>
           <div className="dropdown">
-            <NavLink>My Cards</NavLink>
+            <NavLink>My Drinks</NavLink>
             <div>
               <div className="dropdown-content">
                 <br />

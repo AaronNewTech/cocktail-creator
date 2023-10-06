@@ -1,33 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 function Home() {
-  // const [drinks, setDrinks] = useState([]);
-
-  // useEffect(() => {
-  //   fetchSpecificDrinks();
-  // }, []);
-
-  // const fetchSpecificDrinks = async () => {
-  //   const drinkIds = [11000, 11009, 11470, 11053];
-  //   let specificDrinks = [];
-
-  //   for (const drinkId of drinkIds) {
-  //     const response = await fetch(`http://localhost:3000/drinks/${drinkId}`);
-
-  //     if (response.ok) {
-  //       const specificDrink = await response.json();
-  //       specificDrinks.push(specificDrink);
-  //     }
-  //   }
-
-  //   setDrinks(specificDrinks);
-  // };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div>
       <div id="home-page-1">
-        <NavLink to={"/login"}>
+        <NavLink to="/cocktail-generator">
           <img
             id="mixing-button-image"
             src={process.env.PUBLIC_URL + "/images/homepage/Home7.png"}
@@ -44,7 +26,7 @@ function Home() {
       <div id="home-page-2">
         <div className="row-3">
           <div className="column-2">
-            <NavLink to="/videos">
+            <NavLink to="/cocktail-generator">
               <div className="image-container">
                 <img
                   id="video-speech-trainer-logo"
@@ -65,21 +47,44 @@ function Home() {
             </NavLink>
           </div>
           <div className="column-2">
-            <NavLink to="/videos">
+            <NavLink to="/mocktail-search">
               <img
                 id="games-logo"
-                src={process.env.PUBLIC_URL + "/images/homepage/Products2.png"}
+                src={process.env.PUBLIC_URL + "/images/homepage/mocktail-logo.png"}
                 alt="Video Speech Trainer"
               />
             </NavLink>
           </div>
         </div>
         <div className="row-4">
-          <img
-            id="make-my-cocktail-image"
-            src={process.env.PUBLIC_URL + "/images/homepage/Products6.png"}
-            alt="home-learning-center"
-          />
+          <NavLink to="/cocktail-generator">
+            <img
+              id="cocktail-generator-image"
+              src={
+                process.env.PUBLIC_URL +
+                "/images/homepage/cocktail-generator.png"
+              }
+              alt="home-learning-center"
+            />
+          </NavLink>
+          <NavLink to="/drink-search">
+            <img
+              id="cocktail-search-image"
+              src={
+                process.env.PUBLIC_URL + "/images/homepage/cocktail-search.png"
+              }
+              alt="home-learning-center"
+            />
+          </NavLink>
+          <NavLink to="/mocktail-search">
+            <img
+              id="mocktail-search-image"
+              src={
+                process.env.PUBLIC_URL + "/images/homepage/mocktail-search.png"
+              }
+              alt="home-learning-center"
+            />
+          </NavLink>
         </div>
       </div>
     </div>

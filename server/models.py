@@ -18,8 +18,8 @@ class DrinkIngredientsAssociation(db.Model, SerializerMixin):
 
     # serialize_rules = ('-sweet.vendor_sweets', '-vendor.vendor_sweets')
 
-    serialize_rules = ('-drink.drink_ingredient_associations', '-ingredient.drink_ingredient_associations',)
-
+    serialize_rules = ('-drink.drink_ingredient_associations',
+                       '-ingredient.drink_ingredient_associations',)
 
     # serialize_rules = ('-drink.drink_ingredients',
     #                    '-ingredient.drink_ingredients',)
@@ -37,12 +37,12 @@ class UserDrinksAssociation(db.Model, SerializerMixin):
     serialize_rules = ('-user.user_drinks', '-drink.user_drinks',)
 
 
-
 class Drink(db.Model, SerializerMixin):
     __tablename__ = 'drinks'
 
     id = db.Column(db.Integer, primary_key=True)
     strDrink = db.Column(db.String)
+    strAlcoholic = db.Column(db.String)
     strDrinkThumb = db.Column(db.String)
     strGlass = db.Column(db.String)
     strVideo = db.Column(db.String)
@@ -76,10 +76,11 @@ class Drink(db.Model, SerializerMixin):
 
     # serialize rules
 
-    serialize_rules = ('-users.drink', '-drink_ingredient_associations.drink', '-user_drinks.drink',)
-
+    serialize_rules = (
+        '-users.drink', '-drink_ingredient_associations.drink', '-user_drinks.drink',)
 
     # validations
+
     @validates('name')
     def validate_name(self, key, name):
         if not name or name.length() <= 0:
@@ -113,19 +114,18 @@ class Ingredient(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-
+    image = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     # relationships
     drink_ingredient_associations = db.relationship(
         'DrinkIngredientsAssociation', cascade='all, delete', backref='ingredient')
 
-    
-
-    serialize_rules = ('-user_ingredients.ingredient', '-drink_ingredients.ingredient',)
-
+    serialize_rules = ('-user_ingredients.ingredient',
+                       '-drink_ingredients.ingredient',)
 
     # validations
+
     @validates('name')
     def validate_name(self, key, name):
         if not name or len(name) <= 0:
@@ -161,8 +161,8 @@ class User(db.Model, SerializerMixin):
     # serialize rules
     # serialize_rules = ('-drink.users', '-ingredient.users',)
 
-    serialize_rules = ('-drink.users', '-ingredient.users', '-user_drinks.user',)
-
+    serialize_rules = ('-drink.users', '-ingredient.users',
+                       '-user_drinks.user',)
 
     # validations
 
@@ -183,6 +183,33 @@ class User(db.Model, SerializerMixin):
     #     if not password or password.length() <= 0:
     #         raise ValueError('Invalid password provided')
     #     return password
+
+    # class FavoriteDrink(db.Model, SerializerMixin):
+    #     __tablename__ = 'user_favorite_drinks'
+
+    #     id = db.Column(db.Integer, primary_key=True)
+    #     created_at = db.Column(db.DateTime, server_default=db.func.now())
+    #     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    #     # relationships
+    #     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    #     drink_id = db.Column(db.Integer, db.ForeignKey("drinks.id"))
+
+
+class EmailList(db.Model, SerializerMixin):
+    __tablename__ = 'email_list'
+
+    id = db.Column(db.Integer, primary_key=True)
+    # display_name = db.Column(db.String)
+    email = db.Column(db.String)
+    name = db.Column(db.String)
+    age = db.Column(db.Integer)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    # relationships
+
+    # serialize rules
 
     def __repr__(self):
         return f'<User {self.id}>'
