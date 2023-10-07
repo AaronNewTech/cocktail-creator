@@ -74,9 +74,21 @@ function FavoriteButton({ drinkId, email }) {
   return (
     <div>
       {user ? (
-        <button onClick={handleFavoriteClick}>
-          {isDrinkFavorited ? "Unfavorite" : "Favorite"}
-        </button>
+        <div >
+          {isDrinkFavorited ? <div>
+        <img onClick={handleFavoriteClick}
+          id="unfavorite-button"
+          src="/images/buttons/unfavorite-button.png"
+          alt="unfavorite-button"
+        />
+      </div> : <div>
+        <img onClick={handleFavoriteClick}
+          id="favorite-button"
+          src="/images/buttons/favorite-button.png"
+          alt="favorite-button"
+        />
+      </div>}
+        </div>
       ) : (
         <div></div>
       )}

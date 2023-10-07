@@ -83,25 +83,39 @@ body {
   background-size: cover;
   background-position: center top;
 }
-
 /* Default styles for larger screens */
 .flex-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid var(--link);
-  padding: 20px;
-  width: 60%; /* Set initial width */
-  margin: 0 auto; /* Center align the container horizontally */
+  /* border: 2px solid var(--link); */
+  /* padding: 20px; */
+  max-width: 60%;
+  width: 60%; 
+  margin: 0 auto; 
   color: black;
 }
 
 .flex-container > * {
   background-color: rgba(255, 255, 255, 0.8);
-  padding: 10px;
-  margin: 10px;
+  padding: 3%;
+  background-color: black;
+  /* margin: 10px; */
 }
+
+.drink-container {
+  max-width: 100%;
+  min-width: 60%;
+  background-color: white;
+}
+
+#drink-display-image {
+  max-width: 100%;
+  height: 100%; /* Set a fixed height for your images */
+  object-fit: cover; /* Adjust this property as needed */
+}
+
 
 #instructions {
   overflow: hidden;
@@ -439,4 +453,11 @@ body {
 #no-drinks-message {
   color: white;
   text-align: center;
+}
+
+#unfavorite-button,
+#favorite-button,
+#edit-button,
+#delete-button {
+  width: 40%;
 }

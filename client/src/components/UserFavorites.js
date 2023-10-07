@@ -17,7 +17,7 @@ function UserFavorites() {
       if (response.ok) {
         const allDrinks = await response.json();
         setDrinks(allDrinks);
-        console.log(allDrinks);
+        // console.log(allDrinks);
       } else {
         console.error("Error fetching drinks:", response.statusText);
       }

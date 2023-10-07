@@ -14,7 +14,7 @@ function DrinkDisplay({ drink, email }) {
         <div className="drink-container">
           <h2>{drink.strDrink}</h2>
 
-          <img src={drink.strDrinkThumb} alt={drink.strDrink} />
+          <img id="drink-display-image" src={drink.strDrinkThumb} alt={drink.strDrink} />
           <h3 id="instructions">Instructions: </h3>
           <p>{drink.strInstructions}</p>
 

@@ -30,7 +30,7 @@ class DrinksById(Resource):
         if drink is None:
             return make_response({'error': 'Drink is not found'}, 404)
         db.session.delete(drink)
-        
+
         db.session.commit()
         return make_response('', 204)
 
@@ -96,12 +96,40 @@ class Drinks(Resource):
 api.add_resource(Drinks, '/drinks')
 
 
-# class Users(Resource):
-#     def get(self):
-#         users = [user.to_dict() for user in User.query.all()]
-#         return make_response(users, 200)
+class Users(Resource):
+    def get(self):
+        users = [user.to_dict() for user in User.query.all()]
+        return make_response(users, 200)
 
-# api.add_resource(Users, '/users')
+
+api.add_resource(Users, '/users')
+
+
+class UsersById(Resource):
+    def get(self, id):
+        user = User.query.filter(User.id == id).first()
+        if not user:
+            return make_response({
+                "error": "User not found"
+            }, 404)
+        return make_response(user.to_dict(), 200)
+
+    def delete(self, id):
+        user = User.query.filter(User.id == id).one_or_none()
+        if user is None:
+            return make_response({'error': 'User is not found'}, 404)
+        db.session.delete(user)
+
+        db.session.commit()
+        return make_response('', 204)
+
+    # def patch(self, id):
+    #     user = user.query.filter(user.id == id).first()
+    #     if not user:
+    #         return make_response({"error": "user not found"}, 404)
+
+
+api.add_resource(UsersById, '/users/<int:id>')
 
 
 class Register(Resource):
@@ -216,11 +244,16 @@ class CreateDrink(Resource):
                     if not ingredient:
                         ingredient = Ingredient(name=ingredient_name)
                         db.session.add(ingredient)
+                        db.session.flush()
                     ingredient_ids.append(ingredient.id)
-
+            print(ingredient_ids)
             for ingredient_id in ingredient_ids:
+                # print(drink.id)
+                # if ingredient_id None:
+                    # ingredient_id = Ingredient.query.filter(Ingredient.name =
                 drink_ingredient_association = DrinkIngredientsAssociation(
                     drink_id=drink.id, ingredient_id=ingredient_id)
+                # print(ingredient_id)
                 db.session.add(drink_ingredient_association)
 
             db.session.commit()
@@ -395,6 +428,7 @@ class UnFavoriteDrinksById(Resource):
 
 api.add_resource(UnFavoriteDrinksById, '/user_favorite_drinks/<int:id>')
 
+
 class IngredientsById(Resource):
     def get(self, id):
         ingredient = Ingredient.query.filter(Ingredient.id == id).first()
@@ -409,10 +443,11 @@ class IngredientsById(Resource):
         if ingredient is None:
             return make_response({'error': 'Ingredient is not found'}, 404)
         db.session.delete(ingredient)
-        
+
         db.session.commit()
         return make_response('', 204)
-    
+
+
 api.add_resource(IngredientsById, '/ingredients/<int:id>')
 
 

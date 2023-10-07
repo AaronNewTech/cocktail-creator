@@ -3,6 +3,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
 from sqlalchemy import MetaData
+from email_validator import validate_email, EmailNotValidError
 
 from config import db
 
@@ -12,17 +13,16 @@ class DrinkIngredientsAssociation(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
 
+    # relationships
+
     drink_id = db.Column(db.Integer, db.ForeignKey("drinks.id"))
 
     ingredient_id = db.Column(db.Integer, db.ForeignKey("ingredients.id"))
 
-    # serialize_rules = ('-sweet.vendor_sweets', '-vendor.vendor_sweets')
+    # serialize rules
 
     serialize_rules = ('-drink.drink_ingredient_associations',
                        '-ingredient.drink_ingredient_associations',)
-
-    # serialize_rules = ('-drink.drink_ingredients',
-    #                    '-ingredient.drink_ingredients',)
 
 
 class UserDrinksAssociation(db.Model, SerializerMixin):
@@ -30,9 +30,13 @@ class UserDrinksAssociation(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
 
+    # relationships
+
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     drink_id = db.Column(db.Integer, db.ForeignKey("drinks.id"))
+
+    # serialize rules
 
     serialize_rules = ('-user.user_drinks', '-drink.user_drinks',)
 
@@ -61,11 +65,8 @@ class Drink(db.Model, SerializerMixin):
     strMeasure1 = db.Column(db.String)
     strMeasure2 = db.Column(db.String)
     strMeasure3 = db.Column(db.String)
-
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-
-    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     # relationships
 
@@ -117,9 +118,13 @@ class Ingredient(db.Model, SerializerMixin):
     image = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
     # relationships
+
     drink_ingredient_associations = db.relationship(
         'DrinkIngredientsAssociation', cascade='all, delete', backref='ingredient')
+
+    # serialize rules
 
     serialize_rules = ('-user_ingredients.ingredient',
                        '-drink_ingredients.ingredient',)
@@ -146,7 +151,7 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    # display_name = db.Column(db.String)
+    # name = db.Column(db.String)
     email = db.Column(db.String)
     password = db.Column(db.String)
     hash = db.Column(db.Text, nullable=False)
@@ -155,61 +160,76 @@ class User(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     # relationships
+
     user_drinks = db.relationship(
         'UserDrinksAssociation', cascade='all, delete', backref='user')
 
     # serialize rules
-    # serialize_rules = ('-drink.users', '-ingredient.users',)
 
     serialize_rules = ('-drink.users', '-ingredient.users',
                        '-user_drinks.user',)
 
     # validations
 
-    # @validates('display_name')
-    # def validate_display_name(self, key, display_name):
-    #     if not display_name or display_name.length() <= 0:
-    #         raise ValueError('Invalid display_name provided')
-    #     return display_name
+    # @validates('name')
+    # def validate_name(self, key, name):
+    #     if not name or name.length() <= 0:
+    #         raise ValueError('Invalid name provided')
+    #     return name
 
-    # @validates('email')
-    # def validate_email(self, key, email):
-    #     if not email or email.length() <= 0:
-    #         raise ValueError('Invalid email provided')
-    #     return email
+    @validates('email')
+    def validate_email(self, key, email):
+        if not email or len(email) <= 0:
+            raise ValueError('Invalid email address provided')
 
-    # @validates('password')
-    # def validate_password(self, key, password):
-    #     if not password or password.length() <= 0:
-    #         raise ValueError('Invalid password provided')
-    #     return password
+        # Use email_validator to validate the email
+        try:
+            validate_email(email)
+        except EmailNotValidError:
+            raise ValueError('Invalid email address provided')
 
-    # class FavoriteDrink(db.Model, SerializerMixin):
-    #     __tablename__ = 'user_favorite_drinks'
+        return email
 
-    #     id = db.Column(db.Integer, primary_key=True)
-    #     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    #     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-
-    #     # relationships
-    #     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    #     drink_id = db.Column(db.Integer, db.ForeignKey("drinks.id"))
+    @validates('password')
+    def validate_password(self, key, password):
+        if not password or len(password) <= 0:
+            raise ValueError('Invalid password provided')
+        return password
 
 
 class EmailList(db.Model, SerializerMixin):
     __tablename__ = 'email_list'
 
     id = db.Column(db.Integer, primary_key=True)
-    # display_name = db.Column(db.String)
     email = db.Column(db.String)
     name = db.Column(db.String)
-    age = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     # relationships
 
     # serialize rules
+
+    # validations
+
+    @validates('name')
+    def validate_name(self, key, name):
+        if not name or name.length() <= 0:
+            raise ValueError('Invalid name provided')
+        return name
+
+    @validates('email')
+    def validate_email(self, key, email):
+        if not email or len(email) <= 0:
+            raise ValueError('Invalid email address provided')
+
+        # Use email_validator to validate the email
+        try:
+            validate_email(email)
+        except EmailNotValidError:
+            raise ValueError('Invalid email address provided')
+
+        return email
 
     def __repr__(self):
         return f'<User {self.id}>'

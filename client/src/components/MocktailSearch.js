@@ -8,36 +8,76 @@ function CocktailGenerator() {
 
   const spirits = [
     {
-      image: process.env.PUBLIC_URL + "/images/spirits/brandy.png",
-      text: "brandy",
+      image: process.env.PUBLIC_URL + "/images/mocktails/2.png",
+      text: [ "coke", "coca-cola", "coca cola", "pepsi-cola", "pepsi cola" ],
     },
     {
-      image: process.env.PUBLIC_URL + "/images/spirits/cognac.png",
-      text: "cognac",
+      image: process.env.PUBLIC_URL + "/images/mocktails/3.png",
+      text: "ginger ale",
     },
     {
-      image: process.env.PUBLIC_URL + "/images/spirits/gin.png",
-      text: "gin",
+      image: process.env.PUBLIC_URL + "/images/mocktails/4.png",
+      text: "sparkling water",
     },
     {
-      image: process.env.PUBLIC_URL + "/images/spirits/rum.png",
-      text: "rum",
+      image: process.env.PUBLIC_URL + "/images/mocktails/5.png",
+      text: "tonic water",
     },
     {
-      image: process.env.PUBLIC_URL + "/images/spirits/scotch.png",
-      text: "scotch",
+      image: process.env.PUBLIC_URL + "/images/mocktails/7.png",
+      text: "orange juice",
     },
     {
-      image: process.env.PUBLIC_URL + "/images/spirits/tequila.png",
-      text: "tequila",
+      image: process.env.PUBLIC_URL + "/images/mocktails/8.png",
+      text: "grapefruit juice",
     },
     {
-      image: process.env.PUBLIC_URL + "/images/spirits/vodka.png",
-      text: "vodka",
+      image: process.env.PUBLIC_URL + "/images/mocktails/9.png",
+      text: "lime juice",
     },
     {
-      image: process.env.PUBLIC_URL + "/images/spirits/whiskey.png",
-      text: "whiskey",
+      image: process.env.PUBLIC_URL + "/images/mocktails/10.png",
+      text: "lemon juice",
+    },
+    {
+      image: process.env.PUBLIC_URL + "/images/mocktails/11.png",
+      text: "pineapple juice",
+    },
+    {
+      image: process.env.PUBLIC_URL + "/images/mocktails/12.png",
+      text: "tomato juice",
+    },
+    {
+      image: process.env.PUBLIC_URL + "/images/mocktails/14.png",
+      text: "syrup",
+    },
+    {
+      image: process.env.PUBLIC_URL + "/images/mocktails/15.png",
+      text: "grenadine",
+    },
+    {
+      image: process.env.PUBLIC_URL + "/images/mocktails/16.png",
+      text: "cream",
+    },
+    {
+      image: process.env.PUBLIC_URL + "/images/mocktails/17.png",
+      text: "coffee",
+    },
+    {
+      image: process.env.PUBLIC_URL + "/images/mocktails/19.png",
+      text: "maraschino cherry",
+    },
+    {
+      image: process.env.PUBLIC_URL + "/images/mocktails/20.png",
+      text: "lemon",
+    },
+    {
+      image: process.env.PUBLIC_URL + "/images/mocktails/21.png",
+      text: "lime",
+    },
+    {
+      image: process.env.PUBLIC_URL + "/images/mocktails/22.png",
+      text: "mint",
     },
   ];
 
@@ -56,16 +96,22 @@ function CocktailGenerator() {
     filter = drinks.filter((drink) => {
       return (
         (drink.strIngredient1 &&
+          drink.strAlcoholic === "Non alcoholic" &&
           drink.strIngredient1.toLowerCase().includes(search.toLowerCase())) ||
         (drink.strIngredient2 &&
+          drink.strAlcoholic === "Non alcoholic" &&
           drink.strIngredient2.toLowerCase().includes(search.toLowerCase())) ||
         (drink.strIngredient3 &&
+          drink.strAlcoholic === "Non alcoholic" &&
           drink.strIngredient3.toLowerCase().includes(search.toLowerCase())) ||
         (drink.strIngredient4 &&
+          drink.strAlcoholic === "Non alcoholic" &&
           drink.strIngredient4.toLowerCase().includes(search.toLowerCase())) ||
         (drink.strIngredient5 &&
+          drink.strAlcoholic === "Non alcoholic" &&
           drink.strIngredient5.toLowerCase().includes(search.toLowerCase())) ||
         (drink.strIngredient6 &&
+          drink.strAlcoholic === "Non alcoholic" &&
           drink.strIngredient6.toLowerCase().includes(search.toLowerCase()))
       );
     });
