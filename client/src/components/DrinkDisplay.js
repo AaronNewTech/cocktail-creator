@@ -12,7 +12,7 @@ function DrinkDisplay({ drink, email }) {
       <br />
       <div className="flex-container">
         <div className="drink-container">
-          <h2>{drink.strDrink}</h2>
+          <h2 id="" >{drink.strDrink}</h2>
 
           <img id="drink-display-image" src={drink.strDrinkThumb} alt={drink.strDrink} />
           <h3 id="instructions">Instructions: </h3>

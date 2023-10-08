@@ -26,7 +26,7 @@ function DrinkSearch() {
   }
 
   const drinkList = filter.map((drink) => {
-    return <DrinkDisplay key={drink.id} drink={drink} />;
+    return <div className="flex-container" ><DrinkDisplay key={drink.id} drink={drink} /></div>;
   });
 
   function handleChange(e) {

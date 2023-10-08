@@ -6,7 +6,7 @@ function CocktailGenerator() {
   const [drinks, setDrinks] = useState([]);
   const [selectedDrink, setSelectedDrink] = useState(null);
 
-  const spirits = [
+  const mocktailIngredients = [
     {
       image: process.env.PUBLIC_URL + "/images/mocktails/2.png",
       text: [ "coke", "coca-cola", "coca cola", "pepsi-cola", "pepsi cola" ],
@@ -121,7 +121,7 @@ function CocktailGenerator() {
   }
 
   const drinkList = filter.map((drink) => {
-    return <DrinkDisplay key={drink.id} drink={drink} />;
+    return <div className="flex-container" ><DrinkDisplay key={drink.id} drink={drink} /></div>;
   });
 
   const handleCheckboxChange = (event, index, value) => {
@@ -156,7 +156,7 @@ function CocktailGenerator() {
       </div>
 
       <div className="spirit-buttons">
-        {spirits.map((spirit, index) => (
+        {mocktailIngredients.map((spirit, index) => (
           <div key={index} className="spirit-item">
             <img src={spirit.image} alt={spirit.text} id="spirit-buttons" />
             <input

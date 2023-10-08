@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 // import * as yup from "yup";
 import { useFormik } from "formik";
+import DrinkDisplay from "./DrinkDisplay";
 
 function CreateDrink({ email }) {
   const [formErrors, setFormErrors] = useState([]);
+  const [search, setSearch] = useState("User created");
   const [drinks, setDrinks] = useState([]);
 
   useEffect(() => {
@@ -23,6 +25,7 @@ function CreateDrink({ email }) {
       ingredients: ["", "", "", "", ""],
       instructions: "",
       imageURL: "",
+      // strCategory: "",
     },
     onSubmit: async (values) => {
       const newDrink = {
@@ -48,6 +51,7 @@ function CreateDrink({ email }) {
         strInstructions:
           values.instructions.charAt(0).toUpperCase() +
           values.instructions.slice(1),
+        // strCategory: "User created",
       };
       // console.log(newDrink);
       const response = await fetch("/create_drink", {
@@ -81,53 +85,85 @@ function CreateDrink({ email }) {
     },
   });
 
+  let filter = drinks;
+  if (search !== "") {
+    filter = drinks.filter((drink) => {
+      return drink.strCategory.toLowerCase().includes(search.toLowerCase());
+    });
+    filter.map((drink) => {
+      return <DrinkDisplay key={drink.id} drink={drink} />;
+    });
+  }
+
+  const drinkList = filter.map((drink) => {
+    return (
+      <div className="flex-container">
+        <DrinkDisplay key={drink.id} drink={drink} />
+      </div>
+    );
+  });
+
   return (
-    <form onSubmit={formik.handleSubmit} className="new-drink-form">
-      <input
-        id="drinkName"
-        name="drinkName"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.drinkName}
-        placeholder="Drink Name"
-      />
-      {formik.values.ingredients.map((ingredient, index) => (
+    <div>
+      <form onSubmit={formik.handleSubmit} className="new-drink-form">
         <input
-          key={index}
-          id={`ingredients[${index}]`}
-          name={`ingredients[${index}]`}
+          id="drinkName"
+          name="drinkName"
           type="text"
           onChange={formik.handleChange}
-          value={formik.values.ingredients[index]}
-          placeholder={`Ingredient ${index + 1}`}
+          value={formik.values.drinkName}
+          placeholder="Drink Name"
         />
-      ))}
+        {formik.values.ingredients.map((ingredient, index) => (
+          <input
+            key={index}
+            id={`ingredients[${index}]`}
+            name={`ingredients[${index}]`}
+            type="text"
+            onChange={formik.handleChange}
+            value={formik.values.ingredients[index]}
+            placeholder={`Ingredient ${index + 1}`}
+          />
+        ))}
 
-      <input
-        id="imageURL"
-        name="imageURL"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.imageURL}
-        placeholder="Image URL"
-      />
-      <textarea
-        id="instructions"
-        name="instructions"
-        onChange={formik.handleChange}
-        value={formik.values.instructions}
-        placeholder="Instructions"
-        rows={5}
-      />
-      {formErrors.length > 0
-        ? formErrors.map((err, index) => (
-            <p key={index} style={{ color: "red" }}>
-              {err}
-            </p>
-          ))
-        : null}
-      <input type="submit" value="Add Drink" />
-    </form>
+        <input
+          id="imageURL"
+          name="imageURL"
+          type="text"
+          onChange={formik.handleChange}
+          value={formik.values.imageURL}
+          placeholder="Image URL"
+        />
+        <textarea
+          id="instructions"
+          name="instructions"
+          onChange={formik.handleChange}
+          value={formik.values.instructions}
+          placeholder="Instructions"
+          rows={5}
+        />
+        {formErrors.length > 0
+          ? formErrors.map((err, index) => (
+              <p key={index} style={{ color: "red" }}>
+                {err}
+              </p>
+            ))
+          : null}
+        <input type="submit" value="Add Drink" />
+      </form>
+      <br />
+      <br />
+      
+      <div id="flex-container">
+        {search && filter.length !== 0 ? (
+          <div className="drink-list">{drinkList}</div>
+        ) : (
+          <h3 id="no-drinks-message">No Created Drinks. Please Create a Drink</h3>
+        )}
+      </div>
+      <br />
+      <br />
+    </div>
   );
 }
 

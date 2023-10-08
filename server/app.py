@@ -222,6 +222,7 @@ class CreateDrink(Resource):
             "strInstructions": data["strInstructions"],
             # Updated to strDrinkThumb
             "strDrinkThumb": data.get("strDrinkThumb", ""),
+            "strCategory": "User created"
         }
         for i in range(1, 11):
             if data.get(f"strIngredient{i}"):
@@ -231,6 +232,7 @@ class CreateDrink(Resource):
         try:
             for attr, value in drink_data.items():
                 setattr(drink, attr, value)
+                # print(drink_data.strCategory)
             db.session.add(drink)
             db.session.flush()  # Flush to get the drink id
 
@@ -449,6 +451,26 @@ class IngredientsById(Resource):
 
 
 api.add_resource(IngredientsById, '/ingredients/<int:id>')
+
+class UserFavById(Resource):
+    def get(self, id):
+        favorite = UserDrinksAssociation.query.filter(UserDrinksAssociation.id == id).first()
+        if not favorite:
+            return make_response({
+                "error": "Favorite not found"
+            }, 404)
+        return make_response(favorite.to_dict(), 200)
+
+    def delete(self, id):
+        favorite = UserDrinksAssociation.query.filter(UserDrinksAssociation.id == id).one_or_none()
+        if favorite is None:
+            return make_response({'error': 'Favorite is not found'}, 404)
+        db.session.delete(favorite)
+
+        db.session.commit()
+        return make_response('', 204)
+    
+api.add_resource(UserFavById, '/user_fav_id/<int:id>')
 
 
 if __name__ == '__main__':

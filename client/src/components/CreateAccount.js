@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 
-
 function CreateAccount({ loggedIn, setLoggedIn }) {
   const [formErrors, setFormErrors] = useState([]);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -69,13 +68,19 @@ function CreateAccount({ loggedIn, setLoggedIn }) {
         </button>
       </form>
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-      <form onSubmit={formik.handleSubmit} className="form"></form>
+      <form
+        onSubmit={formik.handleSubmit}
+        className="create-account-form"
+      ></form>
       <div id="login-link-container">
         <p id="login-link-text">Already have an account?</p>
         <a id="login-link" href="http://localhost:3000/login">
-          Login in
+          Login In
         </a>
       </div>
+      <br />
+      <br />
+      <br />
     </div>
   );
 }

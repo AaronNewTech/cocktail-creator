@@ -61,46 +61,64 @@ function LoginForm({ email, setEmail }) {
     <div id="login-container">
       {user ? (
         <>
-          <p id="logged-in-message" >Welcome back, {email}! You are now logged in.</p>
-          <button id="logout-button" onClick={handleLogout}>
-            Logout
-          </button>
+          <div id="logout-screen">
+            <p id="logged-in-message">
+              Welcome back, {email}! You are now logged in.
+            </p>
+            <button id="logout-button" onClick={handleLogout}>
+              Logout
+            </button>
+            <br />
+            <br />
+            <br />
+            <br />
+          </div>
         </>
       ) : (
-        <form className="login-form">
-          <div>
-            <label htmlFor="email">Email: </label>
-            <input
-              type="text"
-              id="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </div>
-          <button id="button" type="button" onClick={handleLogin}>
-            Submit
-          </button>
-        </form>
+        <div id="login-screen">
+          <br />
+          <br />
+          <form className="login-form">
+            <div id="login-email">
+              <label htmlFor="email">Email: </label>
+              <input
+                type="text"
+                id="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </div>
+            <div id="login-button" >
+              <button id="button" type="button" onClick={handleLogin}>
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
       )}
       {error && <p style={{ color: "red" }}>{error}</p>}
-      {user ? ( <></>
-
-      ) : (<div id="create-account-container">
-        <p id="create-account-text">Not Registered?</p>
-        <a id="create-account-link" href="http://localhost:3000/create-account">
-          Create an account
-        </a>
-      </div> )}
-      
+      {user ? (
+        <></>
+      ) : (
+        <div id="create-account-container">
+          <p id="create-account-text">Not Registered?</p>
+          <a
+            id="create-account-link"
+            href="http://localhost:3000/create-account"
+          >
+            Create an account
+          </a>
+        </div>
+      )}
     </div>
   );
 }

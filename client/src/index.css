@@ -92,14 +92,16 @@ body {
   /* border: 2px solid var(--link); */
   /* padding: 20px; */
   max-width: 60%;
-  width: 60%; 
-  margin: 0 auto; 
+  width: 60%;
+  margin: 0 auto;
   color: black;
 }
 
 .flex-container > * {
   background-color: rgba(255, 255, 255, 0.8);
-  padding: 3%;
+  padding-bottom: 3%;
+  padding-left: 3%;
+  padding-right: 3%;
   background-color: black;
   /* margin: 10px; */
 }
@@ -115,7 +117,6 @@ body {
   height: 100%; /* Set a fixed height for your images */
   object-fit: cover; /* Adjust this property as needed */
 }
-
 
 #instructions {
   overflow: hidden;
@@ -460,4 +461,56 @@ body {
 #edit-button,
 #delete-button {
   width: 40%;
+}
+
+#user-favorites {
+  color: white;
+  text-align: center;
+}
+
+#logout-screen {
+  padding-left: 15%;
+  padding-top: 2%;
+}
+
+#login-form {
+  padding-left: 5%;
+  position: sticky;
+}
+
+#login-email {
+  padding-left: 2.1%;
+  position: sticky;
+}
+
+#login-button {
+  padding-left: 14%;
+}
+
+#create-account-container {
+  color: white;
+  font-weight: bold;
+  padding: 3%;
+}
+
+#create-account-link {
+  color: white;
+}
+
+#login-link-text {
+  color: white;
+  font-weight: bold;
+  padding-left: 4%;
+  padding-top: 3%;
+}
+
+#login-link {
+  color: white;
+  font-weight: bold;
+  padding-left: 4%;
+  padding-bottom: 5%;
+}
+
+#create-account-form {
+  padding-bottom: 15%;
 }

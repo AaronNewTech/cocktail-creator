@@ -4,7 +4,6 @@ import DrinkDisplay from "./DrinkDisplay";
 function UserFavorites() {
   const [drinks, setDrinks] = useState([]);
 
-  
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchAllDrinks();
@@ -28,9 +27,11 @@ function UserFavorites() {
 
   return (
     <div id="drink-card-library">
-      <h2>Your Favorite Drinks</h2>
+      <br />
+      <br />
+      <h2 id="user-favorites">Your Favorite Drinks</h2>
       {drinks.length !== 0 ? (
-        <div className="cards-container">
+        <div className="flex-container">
           {drinks &&
             drinks.map((drink) => (
               <div className="display-container" key={drink.id}>
@@ -41,6 +42,8 @@ function UserFavorites() {
       ) : (
         <h3 id="no-drinks-message">No Drinks. Please Add a Favorite</h3>
       )}
+      <br />
+      <br />
     </div>
   );
 }

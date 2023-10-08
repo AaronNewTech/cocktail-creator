@@ -75,7 +75,7 @@ function CocktailGenerator() {
   }
 
   const drinkList = filter.map((drink) => {
-    return <DrinkDisplay key={drink.id} drink={drink} />;
+    return <div className="flex-container" ><DrinkDisplay key={drink.id} drink={drink} /></div>;
   });
 
   const handleCheckboxChange = (event, index, value) => {
