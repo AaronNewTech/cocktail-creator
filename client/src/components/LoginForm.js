@@ -88,8 +88,8 @@ function LoginForm({ email, setEmail }) {
                 onChange={(event) => setEmail(event.target.value)}
               />
             </div>
-            <div>
-              <label htmlFor="password">Password:</label>
+            <div id="login-password" >
+              <label  htmlFor="password">Password:</label>
               <input
                 type="password"
                 id="password"

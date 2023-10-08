@@ -10,12 +10,14 @@
 }
 
 .navbarStyles {
+  position: fixed;
   color: white;
   display: flex;
   justify-content: space-between;
   background-color: black;
   padding: 1%;
   padding-right: 2%;
+  z-index: 100;
 }
 
 .navbarStyles a {
@@ -41,13 +43,13 @@
   width: 120%;
   /* height: 5%; */
   align-items: center;
-  z-index: 10;
+  z-index: 100;
 }
 
 .dropdown {
   position: relative;
   float: right;
-  /* z-index: 100; */
+  z-index: 100;
 }
 
 .dropdown .dropdown-content {
@@ -481,6 +483,15 @@ body {
 #login-email {
   padding-left: 2.1%;
   position: sticky;
+  color: white;
+  font-weight: bold;
+  padding-left: 5%;
+}
+
+#login-password {
+  color: white;
+  font-weight: bold;
+  padding-left: 2.7%;
 }
 
 #login-button {
@@ -513,4 +524,26 @@ body {
 
 #create-account-form {
   padding-bottom: 15%;
+}
+
+#email-text, #create-account-email-text, #create-account-password-text{
+  color: white;
+  font-weight: bold;
+}
+
+#email-text {
+  padding-left: 5%;
+}
+
+#create-account-password-text {
+  padding-left: 5%;
+}
+
+#create-account-email-text {
+  padding-left: 5%;
+}
+
+#email-text, #create-account-email-text, #create-account-password-text{
+  color: white;
+  font-weight: bold;
 }

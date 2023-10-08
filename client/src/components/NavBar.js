@@ -36,7 +36,28 @@ function NavBar() {
           ) : (
             <NavLink to="/create-account"> Create Account </NavLink>
           )}
-          <NavLink to="/drink-search"> Search for Drink </NavLink>
+          
+
+          <div className="dropdown">
+            <NavLink>Drink Search</NavLink>
+            <div>
+              <div className="dropdown-content">
+                <br />
+                <div>
+                  <NavLink to="/cocktail-generator"> Cocktail Generator </NavLink>
+                </div>
+                <br />
+                <div>
+                  <NavLink to="/drink-search"> Search by Name </NavLink>
+                </div>
+                <br />
+                <div>
+                  <NavLink to="/mocktail-search"> Search for Mocktail </NavLink>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="dropdown">
             <NavLink>My Drinks</NavLink>
             <div>
@@ -45,6 +66,7 @@ function NavBar() {
                 <div>
                   <NavLink to="/random-drink"> Random Drink </NavLink>
                 </div>
+                <br />
                 <div>
                   <NavLink to="/create-drink"> Create Drink </NavLink>
                 </div>

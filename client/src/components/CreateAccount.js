@@ -43,7 +43,7 @@ function CreateAccount({ loggedIn, setLoggedIn }) {
     <div>
       <p id="email-text">Sign up with an email address</p>
       <form onSubmit={formik.handleSubmit} className="create-account-form">
-        <label htmlFor="email">Email: </label>
+        <label id="create-account-email-text" htmlFor="email">Email: </label>
         <input
           id="email"
           name="email"
@@ -51,7 +51,7 @@ function CreateAccount({ loggedIn, setLoggedIn }) {
           onChange={formik.handleChange}
           value={formik.values.email}
         />
-        <label htmlFor="password">Password: </label>
+        <label id="create-account-password-text" htmlFor="password">Password: </label>
         <input
           id="password"
           name="password"
@@ -75,7 +75,7 @@ function CreateAccount({ loggedIn, setLoggedIn }) {
       <div id="login-link-container">
         <p id="login-link-text">Already have an account?</p>
         <a id="login-link" href="http://localhost:3000/login">
-          Login In
+          Login
         </a>
       </div>
       <br />
