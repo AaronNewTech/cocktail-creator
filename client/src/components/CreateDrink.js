@@ -105,64 +105,74 @@ function CreateDrink({ email }) {
 
   return (
     <div>
-      <form onSubmit={formik.handleSubmit} className="new-drink-form">
-        <input
-          id="drinkName"
-          name="drinkName"
-          type="text"
-          onChange={formik.handleChange}
-          value={formik.values.drinkName}
-          placeholder="Drink Name"
-        />
-        {formik.values.ingredients.map((ingredient, index) => (
-          <input
-            key={index}
-            id={`ingredients[${index}]`}
-            name={`ingredients[${index}]`}
-            type="text"
-            onChange={formik.handleChange}
-            value={formik.values.ingredients[index]}
-            placeholder={`Ingredient ${index + 1}`}
-          />
-        ))}
+      <div id="create-drink-page" >
+        <h3 id="new-drink-text">Fill Out Form to Create a Drink</h3>
+        <div id="create-drink-container">
+          <form onSubmit={formik.handleSubmit} className="new-drink-form">
+            <input
+              id="drinkName"
+              name="drinkName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.drinkName}
+              placeholder="Drink Name"
+            />
+            {formik.values.ingredients.map((ingredient, index) => (
+              <input
+                key={index}
+                id={`ingredients[${index}]`}
+                name={`ingredients[${index}]`}
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.ingredients[index]}
+                placeholder={`Ingredient ${index + 1}`}
+              />
+            ))}
 
-        <input
-          id="imageURL"
-          name="imageURL"
-          type="text"
-          onChange={formik.handleChange}
-          value={formik.values.imageURL}
-          placeholder="Image URL"
-        />
-        <textarea
-          id="instructions"
-          name="instructions"
-          onChange={formik.handleChange}
-          value={formik.values.instructions}
-          placeholder="Instructions"
-          rows={5}
-        />
-        {formErrors.length > 0
-          ? formErrors.map((err, index) => (
-              <p key={index} style={{ color: "red" }}>
-                {err}
-              </p>
-            ))
-          : null}
-        <input type="submit" value="Add Drink" />
-      </form>
-      <br />
-      <br />
-      
-      <div id="flex-container">
-        {search && filter.length !== 0 ? (
-          <div className="drink-list">{drinkList}</div>
-        ) : (
-          <h3 id="no-drinks-message">No Created Drinks. Please Create a Drink</h3>
-        )}
+            <input
+              id="imageURL"
+              name="imageURL"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.imageURL}
+              placeholder="Image URL"
+            />
+            <textarea
+              id="instructions"
+              name="instructions"
+              onChange={formik.handleChange}
+              value={formik.values.instructions}
+              placeholder="Instructions"
+              rows={5}
+            />
+            {formErrors.length > 0
+              ? formErrors.map((err, index) => (
+                  <p key={index} style={{ color: "red" }}>
+                    {err}
+                  </p>
+                ))
+              : null}
+            <input type="submit" value="Add Drink" />
+          </form>
+          <br />
+          <br />
+
+          <div id="flex-container">
+            {search && filter.length !== 0 ? (
+              <div>
+                <h3 id="created-drink-text">Drinks You Created</h3>
+                <div className="drink-list">{drinkList}</div>
+              </div>
+            ) : (
+              <h3 id="no-drinks-message">
+                No Created Drinks. Please Create a Drink
+              </h3>
+            )}
+          </div>
+          <br />
+          <br />
+        </div>
       </div>
-      <br />
-      <br />
     </div>
   );
 }
