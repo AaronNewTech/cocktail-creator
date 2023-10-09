@@ -6,10 +6,10 @@ function UserFavorites() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchAllDrinks();
+    fetchUserDrinks();
   }, []);
 
-  const fetchAllDrinks = async () => {
+  const fetchUserDrinks = async () => {
     try {
       const response = await fetch("/user_favorite_drinks");
 
@@ -35,7 +35,7 @@ function UserFavorites() {
           {drinks &&
             drinks.map((drink) => (
               <div className="display-container" key={drink.id}>
-                <DrinkDisplay drink={drink} />
+                <DrinkDisplay fetchUserDrinks={fetchUserDrinks} drink={drink} drinks={drinks} setDrinks={setDrinks} />
               </div>
             ))}
         </div>

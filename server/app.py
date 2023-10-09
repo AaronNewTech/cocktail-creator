@@ -45,40 +45,35 @@ class DrinksById(Resource):
             # Update the attributes of the drink based on incoming data
             for attr, value in data.items():
                 setattr(drink, attr, value)
-
+    
             # Update the associations between the drink and ingredients
             ingredient_ids = []
             for i in range(1, 11):
                 ingredient_name = data.get(f"strIngredient{i}")
                 if ingredient_name:
-                    ingredient = Ingredient.query.filter_by(
-                        name=ingredient_name).first()
+                    ingredient = Ingredient.query.filter_by(name=ingredient_name).first()
                     if not ingredient:
                         ingredient = Ingredient(name=ingredient_name)
                         db.session.add(ingredient)
+                        db.session.flush()
                     ingredient_ids.append(ingredient.id)
 
             # Remove existing associations not in the updated ingredient list
-            existing_ingredients = [
-                association.ingredient_id for association in drink.drink_ingredient_associations]
-            associations_to_remove = []
-            for association in drink.drink_ingredient_associations:
+            existing_associations = DrinkIngredientsAssociation.query.filter_by(drink_id=drink.id)
+            for association in existing_associations:
                 if association.ingredient_id not in ingredient_ids:
-                    associations_to_remove.append(association)
-
-            for association in associations_to_remove:
-                db.session.delete(association)
+                    db.session.delete(association)
 
             # Create new associations for updated ingredient list
             for ingredient_id in ingredient_ids:
-                if ingredient_id not in existing_ingredients:
-                    drink_ingredient_association = DrinkIngredientsAssociation(
-                        drink_id=drink.id, ingredient_id=ingredient_id)
+                if not DrinkIngredientsAssociation.query.filter_by(drink_id=drink.id, ingredient_id=ingredient_id).first():
+                    drink_ingredient_association = DrinkIngredientsAssociation(drink_id=drink.id, ingredient_id=ingredient_id)
                     db.session.add(drink_ingredient_association)
 
             db.session.commit()
 
-            return make_response(drink.to_dict(), 202)
+            return make_response(drink.to_dict(), 201)
+
 
         except ValueError:
             return make_response({"errors": ["validation errors"]}, 400)
