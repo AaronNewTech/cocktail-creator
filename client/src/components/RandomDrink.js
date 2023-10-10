@@ -4,7 +4,7 @@ import DrinkDisplay from "./DrinkDisplay";
 function RandomDrink() {
   const [randomDrink, setRandomDrink] = useState(null);
   const minDrinkId = 11000;
-  const maxDrinkId = 11700;
+  const maxDrinkId = 20000;
 
   useEffect(() => {
     fetchRandomDrink();
@@ -42,11 +42,12 @@ function RandomDrink() {
 
   return (
     <div className="flex-container">
-      {randomDrink && (
+      {randomDrink ? 
+      randomDrink && (
         <div className="display-container">
           <DrinkDisplay drink={randomDrink} />
         </div>
-      )}
+      ) : <h3 id="no-random-drink" >Loading</h3>}
     </div>
   );
 }

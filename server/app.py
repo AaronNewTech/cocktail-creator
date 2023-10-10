@@ -3,7 +3,7 @@
 from flask import request, Flask, make_response, jsonify, session, redirect, url_for
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
-from models import db, Drink, Ingredient, User, DrinkIngredientsAssociation, UserDrinksAssociation
+from models import db, Drink, Ingredient, User, DrinkIngredientsAssociation, UserDrinksAssociation, EmailList
 import os
 import bcrypt
 from config import app, db, api
@@ -45,13 +45,14 @@ class DrinksById(Resource):
             # Update the attributes of the drink based on incoming data
             for attr, value in data.items():
                 setattr(drink, attr, value)
-    
+
             # Update the associations between the drink and ingredients
             ingredient_ids = []
             for i in range(1, 11):
                 ingredient_name = data.get(f"strIngredient{i}")
                 if ingredient_name:
-                    ingredient = Ingredient.query.filter_by(name=ingredient_name).first()
+                    ingredient = Ingredient.query.filter_by(
+                        name=ingredient_name).first()
                     if not ingredient:
                         ingredient = Ingredient(name=ingredient_name)
                         db.session.add(ingredient)
@@ -59,7 +60,8 @@ class DrinksById(Resource):
                     ingredient_ids.append(ingredient.id)
 
             # Remove existing associations not in the updated ingredient list
-            existing_associations = DrinkIngredientsAssociation.query.filter_by(drink_id=drink.id)
+            existing_associations = DrinkIngredientsAssociation.query.filter_by(
+                drink_id=drink.id)
             for association in existing_associations:
                 if association.ingredient_id not in ingredient_ids:
                     db.session.delete(association)
@@ -67,13 +69,13 @@ class DrinksById(Resource):
             # Create new associations for updated ingredient list
             for ingredient_id in ingredient_ids:
                 if not DrinkIngredientsAssociation.query.filter_by(drink_id=drink.id, ingredient_id=ingredient_id).first():
-                    drink_ingredient_association = DrinkIngredientsAssociation(drink_id=drink.id, ingredient_id=ingredient_id)
+                    drink_ingredient_association = DrinkIngredientsAssociation(
+                        drink_id=drink.id, ingredient_id=ingredient_id)
                     db.session.add(drink_ingredient_association)
 
             db.session.commit()
 
             return make_response(drink.to_dict(), 201)
-
 
         except ValueError:
             return make_response({"errors": ["validation errors"]}, 400)
@@ -247,7 +249,7 @@ class CreateDrink(Resource):
             for ingredient_id in ingredient_ids:
                 # print(drink.id)
                 # if ingredient_id None:
-                    # ingredient_id = Ingredient.query.filter(Ingredient.name =
+                # ingredient_id = Ingredient.query.filter(Ingredient.name =
                 drink_ingredient_association = DrinkIngredientsAssociation(
                     drink_id=drink.id, ingredient_id=ingredient_id)
                 # print(ingredient_id)
@@ -447,9 +449,11 @@ class IngredientsById(Resource):
 
 api.add_resource(IngredientsById, '/ingredients/<int:id>')
 
+
 class UserFavById(Resource):
     def get(self, id):
-        favorite = UserDrinksAssociation.query.filter(UserDrinksAssociation.id == id).first()
+        favorite = UserDrinksAssociation.query.filter(
+            UserDrinksAssociation.id == id).first()
         if not favorite:
             return make_response({
                 "error": "Favorite not found"
@@ -457,16 +461,57 @@ class UserFavById(Resource):
         return make_response(favorite.to_dict(), 200)
 
     def delete(self, id):
-        favorite = UserDrinksAssociation.query.filter(UserDrinksAssociation.id == id).one_or_none()
+        favorite = UserDrinksAssociation.query.filter(
+            UserDrinksAssociation.id == id).one_or_none()
         if favorite is None:
             return make_response({'error': 'Favorite is not found'}, 404)
         db.session.delete(favorite)
 
         db.session.commit()
         return make_response('', 204)
-    
+
+
 api.add_resource(UserFavById, '/user_fav_id/<int:id>')
 
+
+class AddEmail(Resource):
+    def post(self):
+        try:
+            data = request.get_json()
+
+            email = EmailList()
+            email_data = {
+                "name": data["name"],
+                "email": data["email"],
+            }
+            for attr, value in email_data.items():
+                setattr(email, attr, value)
+
+            db.session.add(email)
+
+            db.session.commit()
+
+            return make_response(email.to_dict(), 201)
+        except ValueError:
+            db.session.rollback()
+            return make_response({"errors": ["validation errors"]}, 400)
+
+
+api.add_resource(AddEmail, '/add_email')
+
+
+class EmailById(Resource):
+    def delete(self, id):
+        email = EmailList.query.filter(EmailList.id == id).one_or_none()
+        if email is None:
+            return make_response({'error': 'Email is not found'}, 404)
+        db.session.delete(email)
+
+        db.session.commit()
+        return make_response('', 204)
+
+
+api.add_resource(EmailById, '/email/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

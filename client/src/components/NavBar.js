@@ -28,15 +28,14 @@ function NavBar() {
           {user ? (
             <NavLink to="/user-favorites"> My Favorites </NavLink>
           ) : (
-            <></>
-          )}
-
-          {user ? (
-            <></>
-          ) : (
             <NavLink to="/create-account"> Create Account </NavLink>
           )}
-          
+
+          {/* {user ? (
+            <></>
+          ) : (
+            
+          )} */}
 
           <div className="dropdown">
             <NavLink>Drink Search</NavLink>
@@ -44,7 +43,10 @@ function NavBar() {
               <div className="dropdown-content">
                 <br />
                 <div>
-                  <NavLink to="/cocktail-generator"> Cocktail Generator </NavLink>
+                  <NavLink to="/cocktail-generator">
+                    {" "}
+                    Cocktail Generator{" "}
+                  </NavLink>
                 </div>
                 <br />
                 <div>

@@ -26,7 +26,11 @@ function DrinkSearch() {
   }
 
   const drinkList = filter.map((drink) => {
-    return <div className="flex-container" ><DrinkDisplay key={drink.id} drink={drink} /></div>;
+    return (
+      <div className="flex-container" key={drink.id}>
+        <DrinkDisplay drink={drink} />
+      </div>
+    );
   });
 
   function handleChange(e) {
@@ -38,7 +42,7 @@ function DrinkSearch() {
     <div>
       <div id="search-box">
         <h3>Type In Cocktail Name</h3>
-        <label id="search-text" htmlFor="search">
+        <label id="search-text" htmlFor="searchTerm">
           Search:{" "}
         </label>
         <input

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function Footer() {
   return (
-    <div id="home-page-3">
+    <div className="footer">
       <img
         id="footer-main-image"
         src={process.env.PUBLIC_URL + "/images/footer/Reviews.png"}
@@ -14,7 +14,7 @@ function Footer() {
           id="footer-cocktail-image"
           src={process.env.PUBLIC_URL + "/images/homepage/Home6.png"}
           alt="footer-cocktail"
-        />{" "}
+        />
         <div className="footer-social-icons">
           <NavLink to="https://www.facebook.com/">
             <img

@@ -97,8 +97,8 @@ function CreateDrink({ email }) {
 
   const drinkList = filter.map((drink) => {
     return (
-      <div className="flex-container">
-        <DrinkDisplay key={drink.id} drink={drink} />
+      <div className="flex-container" key={drink.id}>
+        <DrinkDisplay drink={drink} />
       </div>
     );
   });

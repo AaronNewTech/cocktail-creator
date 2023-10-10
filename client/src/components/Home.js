@@ -1,21 +1,58 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import Modal from "react-modal";
+import EmailPopup from "./EmailPopup";
+
+Modal.setAppElement("#root");
 
 function Home() {
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const [mousePosition, setMousePosition] = useState({
+    left: 0,
+    top: 0,
+  });
+
+  const thresholdY = 10; // Adjust this value as needed
+
+  // Track mouse position
+  function handleMouseMove(ev) {
+    const mouseY = ev.clientY;
+
+    // Check if the cursor position is at the top of the window to trigger the modal
+    if (mouseY <= thresholdY) {
+      openModal();
+      // } else {
+      //   closeModal();
+      // }
+    }
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  console.log(showModal);
+ 
   return (
     <div>
-      <div id="home-page-1">
-        <NavLink to="/cocktail-generator">
+      <div id="home-page-1"> {showModal ? null
+         : <NavLink to="/cocktail-generator">
+          
           <img
             id="mixing-button-image"
             src={process.env.PUBLIC_URL + "/images/homepage/Home7.png"}
             alt="login"
-          />
-        </NavLink>
+          /> 
+        </NavLink>}
 
         <img
           id="bartender-image"
@@ -50,7 +87,9 @@ function Home() {
             <NavLink to="/mocktail-search">
               <img
                 id="games-logo"
-                src={process.env.PUBLIC_URL + "/images/homepage/mocktail-logo.png"}
+                src={
+                  process.env.PUBLIC_URL + "/images/homepage/mocktail-logo.png"
+                }
                 alt="Video Speech Trainer"
               />
             </NavLink>
@@ -87,6 +126,47 @@ function Home() {
           </NavLink>
         </div>
       </div>
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "0.5%",
+          zIndex: 150, 
+        }}
+        onMouseMove={(ev) => handleMouseMove(ev)}
+      ></div>
+
+      {showModal && (
+        <Modal
+        isOpen={showModal}
+        contentLabel="Example Modal"
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // This is the overlay background color with reduced opacity
+            zIndex: 9999, // Adjust as needed
+           
+          },
+          content: {
+            width: "50%",
+            height: "80%",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            // marginBottom: "-50%",
+            overflow: "hidden",
+            backgroundColor: "transparent",
+            borderColor: "transparent",
+          },
+        }}
+      >
+        <EmailPopup />
+      </Modal>
+      
+      )}
     </div>
   );
 }

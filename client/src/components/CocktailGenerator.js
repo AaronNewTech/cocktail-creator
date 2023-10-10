@@ -8,36 +8,67 @@ function CocktailGenerator() {
 
   const spirits = [
     {
+      index: 0,
       image: process.env.PUBLIC_URL + "/images/spirits/brandy.png",
       text: "brandy",
     },
     {
+      index: 1,
       image: process.env.PUBLIC_URL + "/images/spirits/cognac.png",
       text: "cognac",
     },
     {
+      index: 2,
       image: process.env.PUBLIC_URL + "/images/spirits/gin.png",
       text: "gin",
     },
     {
+      index: 3,
       image: process.env.PUBLIC_URL + "/images/spirits/rum.png",
       text: "rum",
     },
     {
+      index: 4,
       image: process.env.PUBLIC_URL + "/images/spirits/scotch.png",
       text: "scotch",
     },
     {
+      index: 5,
       image: process.env.PUBLIC_URL + "/images/spirits/tequila.png",
       text: "tequila",
     },
     {
+      index: 6,
       image: process.env.PUBLIC_URL + "/images/spirits/vodka.png",
       text: "vodka",
     },
     {
+      index: 7,
       image: process.env.PUBLIC_URL + "/images/spirits/whiskey.png",
       text: "whiskey",
+    },
+  ];
+
+  const mixers = [
+    {
+      index: 8,
+      image: process.env.PUBLIC_URL + "/images/mocktails/14.png",
+      text: "syrup",
+    },
+    {
+      index: 9,
+      image: process.env.PUBLIC_URL + "/images/mocktails/15.png",
+      text: "grenadine",
+    },
+    {
+      index: 10,
+      image: process.env.PUBLIC_URL + "/images/mocktails/16.png",
+      text: "cream",
+    },
+    {
+      index: 11,
+      image: process.env.PUBLIC_URL + "/images/mocktails/17.png",
+      text: "coffee",
     },
   ];
 
@@ -75,7 +106,11 @@ function CocktailGenerator() {
   }
 
   const drinkList = filter.map((drink) => {
-    return <div className="flex-container" ><DrinkDisplay key={drink.id} drink={drink} /></div>;
+    return (
+      <div className="flex-container" key={drink.id}>
+        <DrinkDisplay drink={drink} />
+      </div>
+    );
   });
 
   const handleCheckboxChange = (event, index, value) => {
@@ -110,20 +145,44 @@ function CocktailGenerator() {
       </div>
 
       <div className="spirit-buttons">
-        {spirits.map((spirit, index) => (
-          <div key={index} className="spirit-item">
+        {spirits.map((spirit) => (
+          <div key={spirit.index} className="spirit-item">
             <img src={spirit.image} alt={spirit.text} id="spirit-buttons" />
             <input
               type="checkbox"
               value={spirit.text}
               name="spirit"
-              onChange={(event) => handleCheckboxChange(event, index)}
-              checked={selectedDrink === index}
+              onChange={(event) => handleCheckboxChange(event, spirit.index)}
+              checked={selectedDrink === spirit.index}
             />
           </div>
         ))}
       </div>
 
+      <div id="mocktail-spacer-1">
+        <div id="spirits-logo-container">
+          <img
+            id="spirits-logo"
+            src="/images/ingredientheaders/Plans5.png"
+            alt="spirits-logo"
+          />
+        </div>
+
+        <div className="spirit-buttons">
+        {mixers.map((spirit) => (
+          <div key={spirit.index} className="spirit-item">
+            <img src={spirit.image} alt={spirit.text} id="spirit-buttons" />
+            <input
+              type="checkbox"
+              value={spirit.text}
+              name="spirit"
+              onChange={(event) => handleCheckboxChange(event, spirit.index)}
+              checked={selectedDrink === spirit.index}
+            />
+          </div>
+        ))}
+      </div>
+      </div>
       {search && filter.length !== 0 ? (
         <div className="drink-list">{drinkList}</div>
       ) : (
