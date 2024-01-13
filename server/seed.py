@@ -36,7 +36,7 @@ with app.app_context():
         with app.app_context():
             print("Starting seed...")
 
-    for i in range(24000, 100000):
+    for i in range(25000, 100000):
         url = f'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={i}'
         response = requests.get(url)
         data = response.json()
