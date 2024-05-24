@@ -16,29 +16,45 @@ import os
 import requests
 
 # Remote library imports
-from faker import Faker
+
 
 # Local imports
 from app import app
 from models import db, Drink, Ingredient, User, DrinkIngredientsAssociation, UserDrinksAssociation
-from random import choice as rc, randrange
 
 
 with app.app_context():
-    Drink.query.delete()
-    User.query.delete()
-    DrinkIngredientsAssociation.query.delete()
-    Ingredient.query.delete()
-    UserDrinksAssociation.query.delete()
+    # Drink.query.delete()
+    # User.query.delete()
+    # DrinkIngredientsAssociation.query.delete()
+    # Ingredient.query.delete()
+    # UserDrinksAssociation.query.delete()
 
     if __name__ == '__main__':
-        fake = Faker()
+        
         with app.app_context():
+            
             print("Starting seed...")
 
-    for i in range(25000, 100000):
+            with open('counter.txt', 'r') as file:
+                counter = int(file.readline().strip())
+            
+            # last_drink = db.session.query(Drink).order_by(Drink.id.desc()).first()
+
+        # if last_drink:
+        #     last_id = last_drink.id
+        #     print("Last id:", last_id)
+        # else:
+        #     print("No entries found")
+
+        # start_id = last_id + 1
+        # end_id = start_id + 10
+
+    for i in range(counter, counter + 10):
+        print(i)
         url = f'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={i}'
         response = requests.get(url)
+        
         data = response.json()
 
         if data['drinks'] is not None:
@@ -47,7 +63,8 @@ with app.app_context():
             # Use the loop index as the ID
             drink_data['idDrink'] = str(i)
 
-            drink = Drink.query.get(drink_data['idDrink'])
+            drink = Drink.query.filter_by(id=drink_data['idDrink']).first()
+
             print("generating drink ", i)
             if not drink:
                 drink = Drink(id=drink_data['idDrink'])
@@ -97,17 +114,21 @@ with app.app_context():
 
     db.session.commit()
 
-    ingredients = []
 
-    for j in range(1, 15):
-        ingredient_key = f'strIngredient{j}'
-        ingredients_from_query = Drink.query.all()
+    counter += 10
+    with open('counter.txt', 'w') as file:
+        file.write(str(counter))
+    # ingredients = []
 
-        for drink in ingredients_from_query:
-            ingredient_value = getattr(drink, ingredient_key, None)
+    # for j in range(1, 15):
+    #     ingredient_key = f'strIngredient{j}'
+    #     ingredients_from_query = Drink.query.all()
 
-            if ingredient_value is not None and ingredient_value not in ingredients:
-                ingredients.append(ingredient_value)
+    #     for drink in ingredients_from_query:
+    #         ingredient_value = getattr(drink, ingredient_key, None)
+
+    #         if ingredient_value is not None and ingredient_value not in ingredients:
+    #             ingredients.append(ingredient_value)
 
     # Create and insert Ingredient instances into the database
     # for idx, ingredient in enumerate(ingredients):

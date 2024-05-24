@@ -12,7 +12,7 @@ function RandomDrink() {
 
   const fetchRandomDrink = async () => {
     try {
-      const response = await fetch("http://localhost:3000/drinks");
+      const response = await fetch("http://18.118.171.96:5555/drinks");
   
       if (response.ok) {
         const allDrinks = await response.json();

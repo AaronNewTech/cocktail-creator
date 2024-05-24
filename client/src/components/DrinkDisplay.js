@@ -44,7 +44,7 @@ function DrinkDisplay({ drink, email }) {
               ))}
           </ul>
 
-          <FavoriteButton drinkId={drink.id} email={email} />
+          {/* <FavoriteButton drinkId={drink.id} email={email} /> */}
           <DrinkEdit
             currentDrink={currentDrink}
             setCurrentDrink={setCurrentDrink}

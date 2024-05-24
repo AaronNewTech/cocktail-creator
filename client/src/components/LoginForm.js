@@ -17,7 +17,7 @@ function LoginForm({ email, setEmail }) {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("/login", {
+      const response = await fetch("http://18.118.171.96:5555/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

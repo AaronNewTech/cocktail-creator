@@ -19,17 +19,17 @@ function NavBar() {
         </div>
         <div className="navbar-links">
           <NavLink to="/"> Home </NavLink>
-          {user ? (
+          {/* {user ? (
             <NavLink to="/login"> Logout </NavLink>
           ) : (
             <NavLink to="/login"> Login </NavLink>
-          )}
+          )} */}
 
-          {user ? (
+          {/* {user ? (
             <NavLink to="/user-favorites"> My Favorites </NavLink>
           ) : (
             <NavLink to="/create-account"> Create Account </NavLink>
-          )}
+          )} */}
 
           {/* {user ? (
             <></>

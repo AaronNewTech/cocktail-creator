@@ -10,7 +10,7 @@ function CreateDrink({ email }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetch("/drinks")
+    fetch("http://18.118.171.96:5555/drinks")
       .then((r) => r.json())
       .then(setDrinks);
   }, []);
@@ -54,7 +54,7 @@ function CreateDrink({ email }) {
         // strCategory: "User created",
       };
       // console.log(newDrink);
-      const response = await fetch("/create_drink", {
+      const response = await fetch("http://18.118.171.96:5555/create_drink", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +67,7 @@ function CreateDrink({ email }) {
         formik.resetForm();
         setFormErrors([]);
         let drinkId = drink.id;
-        const favResponse = await fetch("/favorite_drinks", {
+        const favResponse = await fetch("http://18.118.171.96:5555/favorite_drinks", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

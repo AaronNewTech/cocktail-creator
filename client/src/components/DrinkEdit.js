@@ -11,7 +11,7 @@ function DrinkEdit({
 
   const handleDelete = async (drinkId) => {
     try {
-      const response = await fetch(`http://localhost:3000/drinks/${drinkId}`, {
+      const response = await fetch(`http://18.118.171.96:5555/drinks/${drinkId}`, {
         method: "DELETE",
       });
 
@@ -45,7 +45,7 @@ function DrinkEdit({
 
   const handleUpdate = async (drinkId) => {
     try {
-      const response = await fetch(`http://localhost:3000/drinks/${drinkId}`, {
+      const response = await fetch(`http://18.118.171.96:5555/drinks/${drinkId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

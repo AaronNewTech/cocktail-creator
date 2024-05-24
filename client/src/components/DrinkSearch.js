@@ -7,7 +7,7 @@ function DrinkSearch() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetch("/drinks")
+    fetch("http://18.118.171.96:5555/drinks")
       .then((res) => res.json())
       .then((data) => {
         setDrinks(data);

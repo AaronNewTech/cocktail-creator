@@ -16,7 +16,7 @@ function EmailPopup() {
         email: values.email,
       };
       // console.log(newEmail);
-      const response = await fetch("/add_email", {
+      const response = await fetch("http://18.118.171.96:5555/add_email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -14,7 +14,7 @@ function FavoriteButton({ drinkId, email }) {
   // Fetch user's favorite drinks
   const fetchUserFavoriteDrinks = async () => {
     try {
-      const response = await fetch("user_favorite_drinks_button");
+      const response = await fetch("http://18.118.171.96:5555/user_favorite_drinks_button");
 
       if (response.ok) {
         const userDrinkData = await response.json();
@@ -36,7 +36,7 @@ function FavoriteButton({ drinkId, email }) {
     try {
       if (isDrinkFavorited) {
         // If already favorited, send a DELETE request to remove it from favorites on the server
-        const response = await fetch(`/user_favorite_drinks/${drinkId}`, {
+        const response = await fetch(`http://18.118.171.96:5555/user_favorite_drinks/${drinkId}`, {
           method: "DELETE",
         });
         if (response.ok) {
@@ -49,7 +49,7 @@ function FavoriteButton({ drinkId, email }) {
         }
       } else {
         // If not favorited, send a POST request to add it to favorites on the server
-        const response = await fetch("/favorite_drinks", {
+        const response = await fetch("http://18.118.171.96:5555/favorite_drinks", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
