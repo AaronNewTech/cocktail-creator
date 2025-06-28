@@ -11,7 +11,7 @@ function AllDrinks() {
 
   const fetchAllDrinks = async () => {
     try {
-      const response = await fetch("http://18.118.171.96:5555/drinks");
+      const response = await fetch("https://cocktail-creator-backend.vercel.app/drinks");
 
       if (response.ok) {
         const allDrinks = await response.json();

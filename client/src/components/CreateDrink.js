@@ -10,7 +10,7 @@ function CreateDrink({ email }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetch("http://18.118.171.96:5555/drinks")
+    fetch("https://cocktail-creator-backend.vercel.app/drinks")
       .then((r) => r.json())
       .then(setDrinks);
   }, []);
@@ -54,7 +54,7 @@ function CreateDrink({ email }) {
         // strCategory: "User created",
       };
       // console.log(newDrink);
-      const response = await fetch("http://18.118.171.96:5555/create_drink", {
+      const response = await fetch("https://cocktail-creator-backend.vercel.app/create_drink", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,7 +67,7 @@ function CreateDrink({ email }) {
         formik.resetForm();
         setFormErrors([]);
         let drinkId = drink.id;
-        const favResponse = await fetch("http://18.118.171.96:5555/favorite_drinks", {
+        const favResponse = await fetch("https://cocktail-creator-backend.vercel.app/favorite_drinks", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

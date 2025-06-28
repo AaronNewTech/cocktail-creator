@@ -7,7 +7,7 @@ function DrinkSearch() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetch("http://18.118.171.96:5555/drinks")
+    fetch("https://cocktail-creator-backend.vercel.app/drinks")
       .then((res) => res.json())
       .then((data) => {
         setDrinks(data);
