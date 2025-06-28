@@ -1,1 +1,7 @@
 .vercel
+flask.crt
+flask.key
+
+client/node_modules
+**/.eslintcache
+**/node_modules/
