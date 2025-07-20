@@ -5,3 +5,4 @@ flask.key
 client/node_modules
 **/.eslintcache
 **/node_modules/
+client/public/images/.DS_Store
