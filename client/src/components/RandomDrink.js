@@ -11,34 +11,26 @@ function RandomDrink() {
   }, []);
 
   const fetchRandomDrink = async () => {
-    try {
-      const response = await fetch("https://cocktail-creator-backend.vercel.app/drinks");
-  
-      if (response.ok) {
-        const allDrinks = await response.json();
-  
-        let randomDrinkId;
-        let randomDrink;
-  
-        const findRandomDrink = () => {
-          randomDrinkId =
-            Math.floor(Math.random() * (maxDrinkId - minDrinkId + 1)) +
-            minDrinkId;
-          randomDrink = allDrinks.find((drink) => drink.id === randomDrinkId);
-          return !randomDrink;
-        };
-  
-        while (findRandomDrink()) {}
-  
-        setRandomDrink(randomDrink);
-      } else {
-        console.error("Error fetching drinks:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error fetching drinks:", error);
-    }
-  };
-  
+  try {
+    // Get valid drink IDs once
+    const idsRes = await fetch("https://cocktail-creator-backend.vercel.app/drinks-ids");
+    if (!idsRes.ok) throw new Error("Failed to fetch valid drink IDs");
+    const validIds = await idsRes.json();
+
+    // Choose a random ID from the list
+    const randomId = validIds[Math.floor(Math.random() * validIds.length)];
+
+    // Fetch the drink by ID
+    const drinkRes = await fetch(`https://cocktail-creator-backend.vercel.app/drinks/${randomId}`);
+    if (!drinkRes.ok) throw new Error(`Drink not found at ID ${randomId}`);
+    const randomDrink = await drinkRes.json();
+
+    setRandomDrink(randomDrink);
+  } catch (error) {
+    console.error("Error fetching random drink:", error);
+  }
+};
+
 
   return (
     <div className="flex-container">
